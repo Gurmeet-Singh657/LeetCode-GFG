@@ -3,19 +3,19 @@ public:
     bool isMatch(string s, string p) {
         int n=s.length(),m=p.length();
         vector<vector<bool>> dp(n+1,vector<bool>(m+1,0));
-        
-        
-        int countstar=0;
-        int countele=0;
-        for(int j=p.length()-1;j>=0;j--)
-        {
-            if(p[j]=='*')
-                countstar++;
-            else
-                countele++;
-            dp[n][j]=(countstar>=countele);
-        }
         dp[n][m]=1;
+        for(int j=p.length()-2;j>=0;j--)
+        {
+            if(j<p.length() && p[j+1]=='*' && dp[n][j+2]==true)
+            {
+                dp[n][j]=true;
+            }
+            else // *p* case never comes so it doesn't matter whatever is marked but if dp[j+2]==false then
+                // it is never possible to get answer
+            {
+                dp[n][j]=false;
+            }
+        }
         
         for(int i=n-1;i>=0;i--)
         {
