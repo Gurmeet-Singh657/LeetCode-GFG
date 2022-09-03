@@ -1,6 +1,6 @@
 class Solution {
 public:
-    bool f(string& s,string& p,int i,int j)
+    bool f(string& s,string& p,int i,int j,vector<vector<int>>& dp)
     {
         if(i==s.length())
         {
@@ -21,19 +21,21 @@ public:
         }
         if(j>=p.length())
             return false;
-        
+        if(dp[i][j]!=-1) return dp[i][j];
         if(p[j+1]=='*')
         {
             if(s[i]==p[j] || p[j]=='.')
-                return f(s,p,i+1,j) | f(s,p,i,j+2);
+                return f(s,p,i+1,j,dp) | f(s,p,i,j+2,dp);
             else
-                return f(s,p,i,j+2);
+                return f(s,p,i,j+2,dp);
         }
         else if(s[i]==p[j] || p[j]=='.')
-            return f(s,p,i+1,j+1);
+            return f(s,p,i+1,j+1,dp);
         return false;
     }
     bool isMatch(string s, string p) {
-        return f(s,p,0,0);
+        int n=s.length(),m=p.length();
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+        return f(s,p,0,0,dp);
     }
 };
