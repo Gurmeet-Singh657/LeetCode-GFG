@@ -4,7 +4,7 @@ public:
     {
         if(i==s.length())
         {
-            if(j>=p.length()) return true;
+            if(j==p.length()) return true;
             int countstar=0,countele=0;
             for(int k=p.length()-1;k>=j;k--)
             {
@@ -19,7 +19,7 @@ public:
             }
             return true;
         }
-        if(j>=p.length())
+        if(j==p.length())
             return false;
         if(dp[i][j]!=-1) return dp[i][j];
         if(p[j+1]=='*')
@@ -35,7 +35,8 @@ public:
     }
     bool isMatch(string s, string p) {
         int n=s.length(),m=p.length();
-        vector<vector<int>> dp(n,vector<int>(m,-1));
+        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        
         return f(s,p,0,0,dp);
     }
 };
