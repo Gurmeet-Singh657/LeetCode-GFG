@@ -25,13 +25,13 @@ public:
         if(p[j+1]=='*')
         {
             if(s[i]==p[j] || p[j]=='.')
-                return f(s,p,i+1,j,dp) | f(s,p,i,j+2,dp);
+                return dp[i][j]= (f(s,p,i+1,j,dp) | f(s,p,i,j+2,dp));
             else
-                return f(s,p,i,j+2,dp);
+                return dp[i][j]=f(s,p,i,j+2,dp);
         }
         else if(s[i]==p[j] || p[j]=='.')
-            return f(s,p,i+1,j+1,dp);
-        return false;
+            return dp[i][j]=f(s,p,i+1,j+1,dp);
+        return dp[i][j]=false;
     }
     bool isMatch(string s, string p) {
         int n=s.length(),m=p.length();
