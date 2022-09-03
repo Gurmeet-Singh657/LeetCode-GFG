@@ -1,42 +1,42 @@
 class Solution {
 public:
-    bool f(string& s,string& p,int i,int j,vector<vector<int>>& dp)
-    {
-        if(i==s.length())
-        {
-            if(j==p.length()) return true;
-            int countstar=0,countele=0;
-            for(int k=p.length()-1;k>=j;k--)
-            {
-                if(p[k]=='*')
-                    countstar++;
-                else
-                {
-                    countele++;
-                    if(countstar<countele)
-                        return false;
-                }
-            }
-            return true;
-        }
-        if(j==p.length())
-            return false;
-        if(dp[i][j]!=-1) return dp[i][j];
-        if(p[j+1]=='*')
-        {
-            if(s[i]==p[j] || p[j]=='.')
-                return dp[i][j]= (f(s,p,i+1,j,dp) | f(s,p,i,j+2,dp));
-            else
-                return dp[i][j]=f(s,p,i,j+2,dp);
-        }
-        else if(s[i]==p[j] || p[j]=='.')
-            return dp[i][j]=f(s,p,i+1,j+1,dp);
-        return dp[i][j]=false;
-    }
     bool isMatch(string s, string p) {
         int n=s.length(),m=p.length();
-        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        vector<vector<bool>> dp(n+1,vector<bool>(m+1,0));
         
-        return f(s,p,0,0,dp);
+        
+        int countstar=0;
+        int countele=0;
+        for(int j=p.length()-1;j>=0;j--)
+        {
+            if(p[j]=='*')
+                countstar++;
+            else
+                countele++;
+            dp[n][j]=(countstar>=countele);
+        }
+        dp[n][m]=1;
+        
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=m-1;j>=0;j--)
+            {
+                if(j<m-1 && p[j+1]=='*')
+                {
+                    if(s[i]==p[j] || p[j]=='.')
+                        dp[i][j]= (dp[i+1][j] | dp[i][j+2]);
+                    else
+                        dp[i][j]=dp[i][j+2];
+                }
+                else if(s[i]==p[j] || p[j]=='.')
+                {
+                    dp[i][j]=dp[i+1][j+1];
+                }
+                else
+                    dp[i][j]=false;
+            }
+        }
+        
+        return dp[0][0];
     }
 };
