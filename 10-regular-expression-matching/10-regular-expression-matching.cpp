@@ -5,19 +5,19 @@ public:
         if(i==s.length())
         {
             if(j>=p.length()) return true;
-            stack<char> st;
-            for(int k=j;k<p.length();k++)
+            int countstar=0,countele=0;
+            for(int k=p.length()-1;k>=j;k--)
             {
-                if(p[k]!='*')
-                    st.push(p[k]);
+                if(p[k]=='*')
+                    countstar++;
                 else
                 {
-                    if(st.empty())
+                    countele++;
+                    if(countstar<countele)
                         return false;
-                    st.pop();   
                 }
             }
-            return st.empty();
+            return true;
         }
         if(j>=p.length())
             return false;
