@@ -2,25 +2,35 @@ class Solution {
 public:
     int dx[8]={-2,-2,2,2,-1,-1,1,1};
     int dy[8]={-1,1,-1,1,-2,2,-2,2};
-    double f(int i,int j,int n,int k,vector<vector<vector<double>>>& dp)
-    {
-        if(k==0)
-            return 1.0;
-        double ans=0.0;
-        if(dp[i][j][k]!=-1) return dp[i][j][k];
-        for(int ind=0;ind<8;ind++)
+    double knightProbability(int n, int k, int row, int column) {
+        vector<vector<vector<double>>> dp(k+1,vector<vector<double>>(n+1,vector<double>(n+1,0)));
+        for(int i=0;i<n;i++)
         {
-            int row=dx[ind]+i;
-            int col=dy[ind]+j;
-            if(row>=0 && row<n && col>=0 && col<n)
+            for(int j=0;j<n;j++)
             {
-                ans+=(0.125*f(row,col,n,k-1,dp));
+                dp[0][i][j]=1.0;
             }
         }
-        return dp[i][j][k]=ans;
-    }
-    double knightProbability(int n, int k, int row, int column) {
-        vector<vector<vector<double>>> dp(n,vector<vector<double>>(n,vector<double>(k+1,-1)));
-        return f(row,column,n,k,dp);
+        for(int ki=1;ki<=k;ki++)
+        {
+            for(int i=0;i<n;i++)
+            {
+                for(int j=0;j<n;j++)
+                {
+                    double ans=0.0;
+                    for(int ind=0;ind<8;ind++)
+                    {
+                        int crow=dx[ind]+i;
+                        int ccol=dy[ind]+j;
+                        if(crow>=0 && crow<n && ccol>=0 && ccol<n)
+                        {
+                            ans+=(0.125*dp[ki-1][crow][ccol]);
+                        }
+                    }
+                    dp[ki][i][j]=ans;
+                }
+            }
+        }
+        return dp[k][row][column];
     }
 };
