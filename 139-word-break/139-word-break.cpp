@@ -1,20 +1,5 @@
 class Solution {
 public:
-    bool f(int ind,string& s,unordered_set<string>& st,int maxlen,vector<int>& dp)
-    {
-        if(ind==s.size())
-            return true;
-        if(dp[ind]!=-1) return dp[ind];
-        string temp="";
-        for(int i=ind;i<ind+maxlen && i<s.size();i++)
-        {
-            temp+=s[i];
-            if(st.find(temp)!=st.end())
-                if(f(i+1,s,st,maxlen,dp))
-                    return dp[ind]=true;
-        }
-        return dp[ind]=false;
-    }
     bool wordBreak(string s, vector<string>& wordDict) {
         unordered_set<string> st;
         int maxlen=0;
@@ -25,7 +10,19 @@ public:
             maxlen=max(maxlen,currsize);
         }
         int n=s.size();
-        vector<int> dp(n,-1);
-        return f(0,s,st,maxlen,dp);
+        vector<int> dp(n+1,0);
+        dp[n]=1;
+        for(int ind=n-1;ind>=0;ind--)
+        {
+            string temp="";
+            for(int i=ind;i<ind+maxlen && i<s.size();i++)
+            {
+                temp+=s[i];
+                if(st.find(temp)!=st.end())
+                    if(dp[i+1])
+                        dp[ind]=true;
+            }
+        }
+        return dp[0];
     }
 };
