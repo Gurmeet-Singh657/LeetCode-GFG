@@ -11,35 +11,12 @@
  */
 class Solution {
 public:
-    int f(TreeNode* root)
-    {
-        if(root==NULL)
-            return 0;
-       int leftr=f(root->left);
-       int rightr=f(root->right);
-       if(leftr==1 && rightr==1) //that means 1 is present at back at both ends
-           return 1;
-        else if(leftr==1)
-        {
-            root->right=NULL;
-            return 1;
-        }
-        else if(rightr==1)
-        {
-            root->left=NULL;
-            return 1;
-        }
-        // when both of them are 0
-        root->left=NULL;
-        root->right=NULL;
-        if(root->val==1)
-            return 1;
-        return 0;
-    }
     TreeNode* pruneTree(TreeNode* root) {
-        int val=f(root);
-        if(val==1)
-            return root;
-        return NULL;
+        if(root==NULL) return NULL;
+        root->left=pruneTree(root->left);
+        root->right=pruneTree(root->right);
+        if(root->left==NULL && root->right==NULL && root->val==0) // currently element is 0 and from back it is 0 
+            return NULL;
+        return root;
     }
 };
