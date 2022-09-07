@@ -2,8 +2,8 @@ class Solution {
 public:
         bool f(string &s1, string &s2, string &s3, int i, int j, vector<vector<int>> &dp)
         {
-            if (i + j == s3.length())
-                return i == s1.length() && j == s2.length();
+            if(i==s1.length() && j==s2.length())
+                return true;
             if (dp[i][j] != -1)
                 return dp[i][j];
             if (i < s1.length() && s1[i] == s3[i + j])
