@@ -1,26 +1,38 @@
 class Solution {
 public:
+     class triple{
+     public:
+      long long int value;
+      int primeno;
+      int pointer;
+     };
+    struct cmp {
+        bool operator()(triple const& t1, triple const& t2)
+        {
+            return t1.value>t2.value;
+        }
+    };
     int nthSuperUglyNumber(int n, vector<int>& primes) {
         int size=primes.size();
-        vector<int> pointers(size,1);
+        priority_queue<triple,vector<triple>,cmp> pq;
+        for(int j=0;j<size;j++)
+        {
+            pq.push({primes[j],primes[j],1});
+        }
         vector<int> dp(n+1,0);
         dp[1]=1;
         for(int i=2;i<=n;i++)
         {
-            long long mini=INT_MAX;
-            for(int j=0;j<size;j++)
-            {
-                int factor=dp[pointers[j]];
-                int ele=primes[j];
-                mini=min(mini,ele*1LL*factor);
-            }
+            auto it=pq.top();
+            pq.pop();
+            long long mini=it.value;
             dp[i]=mini;
-            for(int j=0;j<size;j++)
+            pq.push({it.primeno*1LL*dp[it.pointer+1],it.primeno,it.pointer+1});
+            while(pq.top().value==mini)
             {
-                int factor=dp[pointers[j]];
-                int ele=primes[j];
-                if(factor*1LL*ele==mini)
-                    pointers[j]++;
+                auto it=pq.top();
+                pq.pop();
+                pq.push({it.primeno*1LL*dp[it.pointer+1],it.primeno,it.pointer+1});
             }
         }
         return dp[n];
