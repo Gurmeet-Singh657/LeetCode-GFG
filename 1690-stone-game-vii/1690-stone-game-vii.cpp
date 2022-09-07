@@ -1,14 +1,19 @@
 class Solution {
 public:
-    int f(int i,int j,vector<int>& stones,int sum,vector<vector<int>>& dp)
-    {
-        if(i>j) return 0;
-        if(dp[i][j]!=-1) return dp[i][j];
-        return dp[i][j]=max(sum-stones[i]-f(i+1,j,stones,sum-stones[i],dp),sum-stones[j]-f(i,j-1,stones,sum-stones[j],dp));
-    }
     int stoneGameVII(vector<int>& stones) {
         int sum=accumulate(stones.begin(),stones.end(),0);
-        vector<vector<int>> dp(stones.size(),vector<int>(stones.size(),-1));
-        return f(0,stones.size()-1,stones,sum,dp);
+        vector<vector<int>> dp(stones.size()+1,vector<int>(stones.size()+1,0));
+        vector<int> prefixsum(stones.size(),0);
+        prefixsum[0]=stones[0];
+        for(int i=1;i<stones.size();i++)
+            prefixsum[i]=prefixsum[i-1]+stones[i];
+        for(int i=stones.size()-1;i>=0;i--)
+        {
+            for(int j=i+1;j<stones.size();j++)
+            {
+                dp[i][j]=max(prefixsum[j]-prefixsum[i]-dp[i+1][j],prefixsum[j-1]-(i == 0 ? 0 : prefixsum[i-1])-dp[i][j-1]);
+            }
+        }
+        return dp[0][stones.size()-1];
     }
 };
