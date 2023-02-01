@@ -7,45 +7,28 @@ using namespace std;
 // } Driver Code Ends
 //User function Template for C++
 
-class Solution{   
-public:
-    long long int f(int ind,int N,int r[],int g[],int b[],int prev,vector<vector<long long int>>& dp)
-    {
-        if(ind==N) return 0;
+class Solution{
+    long long int mincost(int i, int r[], int g[], int b[], int N, int color,
+    vector<vector<long long int>>&dp){
+        if(i == N) return 0;
         
-        if(dp[ind][prev]!=-1) return dp[ind][prev];
+        if(dp[i][color] != -1) return dp[i][color];
         
-        long long int taker=1e18,takeg=1e11,takeb=1e11;
-        if(prev==0)
-        {
-            taker=r[ind]+f(ind+1,N,r,g,b,1,dp);
-            takeg=g[ind]+f(ind+1,N,r,g,b,2,dp);
-            takeb=b[ind]+f(ind+1,N,r,g,b,3,dp);
-        }
-        else if(prev==1)
-        {
-            takeg=g[ind]+f(ind+1,N,r,g,b,2,dp);
-            takeb=b[ind]+f(ind+1,N,r,g,b,3,dp);
-        }
-        else if(prev==2)
-        {
-            taker=r[ind]+f(ind+1,N,r,g,b,1,dp);
-            takeb=b[ind]+f(ind+1,N,r,g,b,3,dp);
-        }
-        else
-        {
-            takeg=r[ind]+f(ind+1,N,r,g,b,1,dp);
-            takeb=g[ind]+f(ind+1,N,r,g,b,2,dp);
-        }
-        return dp[ind][prev]=min(taker,min(takeb,takeg));
+        long long int paint1 = 1e11, paint2 = 1e11, paint3 = 1e11;
+        if(color != 1)
+            paint1 = r[i] + mincost(i+1, r, g, b, N, 1, dp);
+        if(color != 2)
+            paint2 = g[i] + mincost(i+1, r, g, b, N, 2, dp);
+        if(color != 3)
+            paint3 = b[i] + mincost(i+1, r, g, b, N, 3, dp);
+        
+        return dp[i][color] = min(paint1,min(paint2, paint3));
+        
     }
+public:
     long long int distinctColoring(int N, int r[], int g[], int b[]){
-        vector<vector<long long int>>  dp(N,vector<long long int>(4,-1));
-        return f(0,N,r,g,b,0,dp);
-        // 0 -> no color
-        // 1 -> red color
-        // 2 -> green color
-        // 3 -> blue color
+        vector<vector<long long int>> dp(N, vector<long long int>(4, -1));
+        return mincost(0,r,g,b,N, 0, dp);
     }
 };
 
