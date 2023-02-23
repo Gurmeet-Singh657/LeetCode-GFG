@@ -37,15 +37,12 @@ public:
         unordered_map<int,vector<int>> arrival_map;
         unordered_map<int,vector<int>> departure_map;
         int n=arr.size();
-        int mindays=100,maxdays=1;
         for(int i=0;i<n;i++)
         {
             arrival_map[days[i]].push_back(arr[i]);
             departure_map[days[i]].push_back(dep[i]);
-            maxdays=max(maxdays,days[i]);
-            mindays=min(mindays,days[i]);
         }
-        for(int day=mindays;day<=maxdays;day++)
+        for(int day=1;day<=100;day++)
         {
             vector<int> arrmp=arrival_map[day];
             vector<int> depmp=departure_map[day];
