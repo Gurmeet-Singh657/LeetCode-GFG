@@ -10,45 +10,26 @@ using namespace std;
 
 class Solution{
 public:
-    bool isPossible(vector<int>& arr,vector<int>& dep,int platforms)
-    {
-        sort(arr.begin(),arr.end());
-        sort(dep.begin(),dep.end());
-        int n=arr.size();
-        int i=1,j=0;
-        int curr=1;
-        while(i<n && j<n)
-        {
-            if(arr[i]<dep[j])
-            {
-                curr++;
-                i++;
-            }
-            else 
-            {
-                curr--;
-                j++;
-            }
-            if(curr>platforms) return false;
-        }
-        return true;
-    }
     bool minimumPlatform2(vector<int> &arr,vector<int> &dep,vector<int> &days,int platforms){
-        unordered_map<int,vector<int>> arrival_map;
-        unordered_map<int,vector<int>> departure_map;
+        vector<vector<int>> mp(101,vector<int>(2800,0));
         int n=arr.size();
         for(int i=0;i<n;i++)
         {
-            arrival_map[days[i]].push_back(arr[i]);
-            departure_map[days[i]].push_back(dep[i]);
+            int day=days[i];
+            int arrival=arr[i];
+            int departure=dep[i];
+            
+            mp[day][arrival]++;
+            mp[day][departure]--;
         }
         for(int day=1;day<=100;day++)
         {
-            vector<int> arrmp=arrival_map[day];
-            vector<int> depmp=departure_map[day];
-            sort(arrmp.begin(),arrmp.end());
-            sort(depmp.begin(),depmp.end());
-            if(!isPossible(arrmp,depmp,platforms)) return false;
+            int curr_platforms=0;
+            for(int ttime=0;ttime<2800;ttime++)
+            {
+                curr_platforms+=mp[day][ttime];
+                if(curr_platforms>platforms) return false;
+            }
         }
         return true;
     }
