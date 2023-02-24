@@ -12,17 +12,13 @@ class Solution
         vector<int> key(V,1e9),parent(V,-1);
         vector<bool> MST(V,false);
         key[0]=0;
-        for(int i=1;i<=V-1;i++)
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        pq.push({0,0});
+        while(!pq.empty())
         {
-            int mini=INT_MAX,node;
-            for(int j=0;j<V;j++)
-            {
-                if(!MST[j] && key[j]<mini)
-                {
-                    mini=key[j];
-                    node=j;
-                }
-            }
+            int node=pq.top().second;
+            pq.pop();
+            if(MST[node]) continue;
             MST[node]=true;
             for(auto it:adj[node])
             {
@@ -31,6 +27,7 @@ class Solution
                 {
                     key[curr_node]=curr_wt;
                     parent[curr_node]=node;
+                    pq.push({curr_wt,curr_node});
                 }
             }
         }
