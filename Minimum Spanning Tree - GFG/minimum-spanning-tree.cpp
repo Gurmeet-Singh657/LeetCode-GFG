@@ -6,37 +6,65 @@ using namespace std;
 class Solution
 {
 	public:
+	class node{
+	    public:
+	    int u;
+	    int v;
+	    int wt;
+	};
+	static bool cmp(node a,node b)
+	{
+	    return a.wt<b.wt;
+	}
+	int parent[1001],rank[1001];
+	int findParent(int u)
+	{
+	    if(parent[u]==u) return u;
+	    return parent[u]=findParent(parent[u]);
+	}
+	void Union(int u,int v)
+	{
+	    u=findParent(u);
+	    v=findParent(v);
+	    if(rank[u]==rank[v])
+	    {
+	        rank[v]++;
+	        parent[u]=v;
+	    }
+	    else if(rank[u]<rank[v])
+	    {
+	        parent[u]=v;
+	    }
+	    else
+	    {
+	        parent[v]=u;
+	    }
+	}
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
-        vector<int> key(V,1e9),parent(V,-1);
-        vector<bool> MST(V,false);
-        key[0]=0;
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
-        pq.push({0,0});
-        while(!pq.empty())
-        {
-            int node=pq.top().second;
-            pq.pop();
-            if(MST[node]) continue;
-            MST[node]=true;
-            for(auto it:adj[node])
-            {
-                int curr_node=it[0],curr_wt=it[1];
-                if(!MST[curr_node] && key[curr_node]>curr_wt)
-                {
-                    key[curr_node]=curr_wt;
-                    parent[curr_node]=node;
-                    pq.push({curr_wt,curr_node});
-                }
-            }
-        }
-        int sum=0;
+        vector<node> edges;
         for(int i=0;i<V;i++)
         {
-            sum+=key[i];
+            for(auto it:adj[i])
+            {
+                int adj_node=it[0],adj_wt=it[1];
+                edges.push_back({i,adj_node,adj_wt});
+            }
         }
-        return sum;
+        for(int i=0;i<=1000;i++) parent[i]=i,rank[i]=0;
+        sort(edges.begin(),edges.end(),cmp);
+        int count=0;
+        int cost=0;
+        for(auto it:edges)
+        {
+            if(findParent(it.u)!=findParent(it.v))
+            {
+                cost+=it.wt;
+                Union(it.u,it.v);
+            }
+        }
+        return cost;
     }
 };
 
