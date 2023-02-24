@@ -10,6 +10,7 @@ class Solution {
   public:
     class DisjointSet
     {
+        public:
         vector<int> parent, rank, size;
     
         public:
@@ -61,7 +62,7 @@ class Solution {
         int count=0;
         for(int i=0;i<n;i++)
         {
-            if(ds.findParent(i)==i) count++;
+            if(ds.parent[i]==i) count++;
         }
         count-=1;
         if(count>extra_Edges) return -1;
