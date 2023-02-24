@@ -8,39 +8,54 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
-    int findCity(int n, int m, vector<vector<int>>& edges,
-                 int distanceThreshold) {
-    vector<vector<int>> dist(n,vector<int>(n,1e9));
-    for(auto it:edges)
+    vector<int> Dijkstra(int node,int n,vector<pair<int,int>> adj[])
     {
-        dist[it[0]][it[1]]=it[2];
-        dist[it[1]][it[0]]=it[2];
-    }
-    for(int i=0;i<n;i++) dist[i][i]=0;
-    for(int k=0;k<n;k++)
-    {
-        for(int i=0;i<n;i++)
+        vector<int> dist(n,1e9);
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+        pq.push({0,node});
+        dist[node]=0;
+        while(!pq.empty())
         {
-            for(int j=0;j<n;j++)
+            auto curr=pq.top();
+            int cwt=curr.first,cnode=curr.second;
+            pq.pop();
+            for(auto it:adj[cnode])
             {
-                if(dist[i][k]==1e9 || dist[k][j]==1e9) continue;
-                dist[i][j]=min(dist[i][j],dist[i][k]+dist[k][j]);
+                int adj_node=it.first,adj_wt=it.second;
+                if(dist[cnode]+adj_wt<dist[adj_node])
+                {
+                    dist[adj_node]=dist[cnode]+adj_wt;
+                    pq.push({dist[adj_node],adj_node});
+                }
             }
         }
+        return dist;
     }
-    int cityMin=n+1;
-    int city=-1;
-    for(int i=0;i<n;i++)
-    {
-        int count=0;
-        for(int j=0;j<n;j++)
+    int findCity(int n, int m, vector<vector<int>>& edges,
+                 int dthre) {
+        vector<pair<int,int>> adj[n];
+        for(auto it:edges)
         {
-            if(dist[i][j]<=distanceThreshold)
-                count++;
+            int u=it[0],v=it[1],wt=it[2];
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});
         }
-        if(count<=cityMin) cityMin=count,city=i;
-    }
-    return city;
+        int city_Min=n+1;
+        int city=-1;
+        for(int i=0;i<n;i++) // for every edge, find shortest paths
+        {
+            vector<int> dist=Dijkstra(i,n,adj);
+            int count=0;
+            for(int j=0;j<n;j++)
+            {
+                if(dist[j]<=dthre)
+                {
+                    count++;
+                }
+            }
+            if(count<=city_Min) city_Min=count,city=i;
+        }
+        return city;
     }
 };
 
