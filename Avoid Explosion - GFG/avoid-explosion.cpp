@@ -49,30 +49,30 @@ class Solution {
     };
     vector<string> avoidExplosion(vector<vector<int>> mix, int n,
                                   vector<vector<int>> danger, int m) {
-         DisjointSet ds(n);
-         vector<string> ans;
-         for(auto it:mix)
-         {
-             int sol1=ds.findParent(it[0]);
-             int sol2=ds.findParent(it[1]);
-             bool flag=false;
-             for(int i=0;i<m;i++)
-             {
-                 int dsol1=ds.findParent(danger[i][0]);
-                 int dsol2=ds.findParent(danger[i][1]);
-                 if((dsol1==sol1 && dsol2==sol2) || (dsol1==sol2 && dsol2==sol1))
-                 {
-                     ans.push_back("No");
-                     flag=true;
-                     break;
-                 }
-             }
-             if(flag==false) 
-             {
-                 ans.push_back("Yes");
-                 ds.Union(sol1,sol2);
-             }
-         }
+        DisjointSet ds(n);
+        vector<string> ans;
+        for(auto it:mix)
+        {
+            int sol1=ds.findParent(it[0]);
+            int sol2=ds.findParent(it[1]);
+            bool flag=false;
+            for(int i=0;i<m;i++)
+            {
+                int dsol1=ds.findParent(danger[i][0]);
+                int dsol2=ds.findParent(danger[i][1]);
+                if((dsol1==sol1 && dsol2==sol2) || (dsol1==sol2 && dsol2==sol1))
+                {
+                    ans.push_back("No");
+                    flag=true;
+                    break;
+                }
+            }
+            if(flag==false)
+            {
+                ans.push_back("Yes");
+                ds.Union(sol1,sol2);
+            }
+        }
         return ans;
     }
 };
