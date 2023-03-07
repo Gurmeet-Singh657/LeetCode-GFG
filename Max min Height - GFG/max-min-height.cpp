@@ -11,7 +11,7 @@ class Solution
 {
     public:
         #define ll long long int
-        bool check(ll mid,vector<int> a,int w,int k)
+        bool check(ll mid,vector<int>& a,int w,int k)
         {
             ll operations=0;
             int n=a.size();
@@ -24,7 +24,8 @@ class Solution
                 {
                     operations+=(mid-a[i]-curr);
                     prefix[i]+=(mid-a[i]-curr);
-                    if(i+w<n) prefix[i+w]-=(mid-a[i]-curr);
+                    if(i+w<n)
+                        prefix[i+w]-=(mid-a[i]-curr);
                 }
             }
             return operations<=k;
@@ -33,7 +34,7 @@ class Solution
         {
             ll maxi=*max_element(a.begin(),a.end());
             ll start=1,end=maxi+k;
-            ll ans;
+            ll ans=-1;
             while(start<=end)
             {
                 ll mid=(start+end)/2;
