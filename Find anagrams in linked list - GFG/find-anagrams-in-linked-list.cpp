@@ -59,10 +59,12 @@ class Solution {
         Node* start=head,*end=head;
         int n=s.length();
         
+        // pattern string
         unordered_map<char,int> mp1;
         for(auto it:s) mp1[it]++;
         int count1=mp1.size();
         
+        // traversing string
         unordered_map<char,int> mp2;
         int count2=0;
         while(end!=NULL)
@@ -76,7 +78,7 @@ class Solution {
                 mp2[start->data]--;
                 start=start->next;
             }
-            
+        
             if(count2==count1)
             {
                 ans.push_back(start);
