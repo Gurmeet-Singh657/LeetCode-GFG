@@ -25,7 +25,7 @@ Output: </span></span></strong><span style="font-size:18px"><span style="color:#
 Explanation: </strong>There is no anagrams, so output is -1</span></pre>
 
 <p><span style="font-size:18px"><strong>Your Task:</strong><br>
-You don't need to read input or print anything. Your task is to complete the function&nbsp;<strong>findAnagrams()&nbsp;</strong>which takes head node of the linked list and a string S as input parameters and returns an array of linked list. If there is no anagram in the linked list,return -1.</span></p>
+You don't need to read input or print anything. Your task is to complete the function&nbsp;<strong>findAnagrams()&nbsp;</strong>which takes head node of the linked list and a string S as input parameters and returns an array of linked list which only stores starting point of the <strong>Anagram</strong>. If there is no anagram in the linked list,return -1.</span></p>
 
 <p><br>
 <span style="font-size:18px"><strong>Expected Time Complexity:</strong>&nbsp;O(N), where N is length of LinkedList<br>
