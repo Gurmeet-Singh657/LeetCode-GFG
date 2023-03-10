@@ -7,15 +7,15 @@ using namespace std;
 class Solution {
   public:
     vector<int> solveQueries(int N, int num, vector<int> &A, vector<vector<int>> &Q) {
-        vector<vector<int>> freq(N,vector<int>(N,0));
+        vector<int> freq(N,0);
         for(int i=0;i<N;i++)
         {
+            int count=0;
             for(int j=i;j<N;j++)
             {
-                if(A[i]==A[j])
-                    freq[i][j]++;
-                if(j>0) freq[i][j]+=freq[i][j-1];
+                if(A[i]==A[j]) count++;
             }
+            freq[i]=count;
         }
         
         vector<int> ans;
@@ -25,8 +25,7 @@ class Solution {
             int count=0;
             for(int j=l;j<=r;j++)
             {
-                int curr=freq[j][N-1]-(j>0 ? freq[j][j-1]:0);
-                if(curr==k) count++;
+                if(freq[j]==k) count++;
             }
             ans.push_back(count);
         }
