@@ -6,18 +6,21 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    vector<int> solveQueries(int N, int num, vector<int> &A, vector<vector<int>> &Q) {
+    vector<int> solveQueries(int N, int num, vector<int> &arr, vector<vector<int>> &Q) {
         vector<int> freq(N,0);
+        // freq[i] -> Number of elements matching arr[i] from i to n-1
+       // Precomputation
         for(int i=0;i<N;i++)
         {
             int count=0;
             for(int j=i;j<N;j++)
             {
-                if(A[i]==A[j]) count++;
+                if(arr[i]==arr[j]) count++;
             }
             freq[i]=count;
         }
         
+        // Main Work
         vector<int> ans;
         for(int i=0;i<num;i++)
         {
