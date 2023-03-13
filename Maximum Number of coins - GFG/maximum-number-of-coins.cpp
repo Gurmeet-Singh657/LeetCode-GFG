@@ -14,7 +14,8 @@ class Solution{
             int ans=-1e9;
             for(int k=i;k<=j;k++)
             {
-                ans=max(ans,(a[i-1]*a[k]*a[j+1])+f(i,k-1,a,dp)+f(k+1,j,a,dp));
+                int curr=a[i-1]*a[k]*a[j+1]+f(i,k-1,a,dp)+f(k+1,j,a,dp);
+                ans=max(ans,curr);
             }
             return dp[i][j]=ans;
         }
@@ -22,20 +23,8 @@ class Solution{
         {
             a.insert(a.begin(),1);
             a.push_back(1);
-            vector<vector<int>> dp(N+2,vector<int>(N+1,0));
-            for(int i=N;i>=1;i--)
-            {
-                for(int j=i;j<=N;j++)
-                {
-                    int ans=-1e9;
-                    for(int k=i;k<=j;k++)
-                    {
-                        ans=max(ans,(a[i-1]*a[k]*a[j+1])+dp[i][k-1]+dp[k+1][j]);
-                    }
-                    dp[i][j]=ans;
-                }
-            }
-            return dp[1][N];
+            vector<vector<int>> dp(N+1,vector<int>(N+1,-1));
+            return f(1,N,a,dp);
         }
 };
 
