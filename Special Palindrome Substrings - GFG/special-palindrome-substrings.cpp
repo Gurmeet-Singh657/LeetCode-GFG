@@ -10,15 +10,15 @@ using namespace std;
 class Solution{
     //Complete the function and return minimum number of operations
     public:
-    int findopern(string& temp,int ncl,int m)
+    int findopern(string& temp,int num1,int m)
     {
         int start=0,end=temp.length()-1;
         int opern=0;
-        while(start<end)
+        while(start<=end)
         {
             if(temp[start]!=temp[end])
             {
-                if(start>=ncl && end<=(ncl+m-1)) return 1e9;
+                if(start>=num1 && end<=(num1+m-1)) return 1e9;
                 opern++;
             }
             start++;
@@ -30,16 +30,18 @@ class Solution{
         int n=s1.length(),m=s2.length();
         string temp=s1;
         int mini=1e9;
-        for(int i=0;i+m<=n;i++)
+        for(int i=0;i<=n-m;i++)
         {
-            int num=0;
+            int op=0;
+            // put s2 in s1 
             for(int j=0;j<m;j++)
             {
-                if(temp[i+j]!=s2[j]) num++;
+                if(temp[i+j]!=s2[j]) op++;
                 
                 temp[i+j]=s2[j];
             }
-            mini=min(mini,num+findopern(temp,i,m));
+            // we have to find number of opern for palindrome
+            mini=min(mini,op+findopern(temp,i,m));
             temp=s1;
         }
         if(mini==1e9) return -1;
