@@ -23,8 +23,20 @@ class Solution{
     long long int  countPS(string str)
     {
         int n=str.length();
-        vector<vector<int>> dp(n,vector<int>(n,-1));
-       return f(0,n-1,str,dp);
+        vector<vector<long long int>> dp(n+1,vector<long long int>(n+1,0));
+        for(int i=0;i<n;i++) dp[i][i]=1;
+        
+        for(int i=n-1;i>=0;i--)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                if(str[i]==str[j])
+                    dp[i][j]=(dp[i+1][j]+dp[i][j-1]+1)%mod;
+                else
+                    dp[i][j]=(dp[i+1][j]+dp[i][j-1]-dp[i+1][j-1]+mod)%mod;
+            }
+        }
+       return dp[0][n-1];
     }
      
 };
