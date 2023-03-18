@@ -33,19 +33,18 @@ class Solution {
     vector<int> getDistinctDifference(int N, vector<int> &A) {
         vector<int> suffix(N+1,0);
         unordered_set<int> st;
-        for(int i=N-1;i>=0;i--)
+        for(int i=N-1;i>=0;i--) // Right to Left
         {
-            if(st.find(A[i])==st.end()) suffix[i]=1;
-            suffix[i]+=suffix[i+1];
             st.insert(A[i]);
+            suffix[i]=st.size();
         }
         st.clear();
         vector<int> ans;
-        int count=0;
         for(int i=0;i<N;i++)
         {
-            ans.push_back(count-suffix[i+1]);
-            if(st.find(A[i])==st.end()) count++;
+            int left=st.size();
+            int right=suffix[i+1];
+            ans.push_back(left-right);
             st.insert(A[i]);
         }
         return ans;
