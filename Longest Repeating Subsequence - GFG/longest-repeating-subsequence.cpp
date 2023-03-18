@@ -20,8 +20,20 @@ class Solution {
 		    string str1=str;
 		    string str2=str;
 		    int n=str.length();
-		    vector<vector<int>> dp(n,vector<int>(n,-1));
-		    return f(0,0,n,str1,str2,dp);
+		    vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+		    for(int i=n-1;i>=0;i--)
+		    {
+		        for(int j=n-1;j>=0;j--)
+		        {
+		            int ans=1e9;
+        	        if(str1[i]==str2[j] && i!=j)
+        	           ans=1+dp[i+1][j+1];
+        	        else
+        	           ans=max(dp[i+1][j],dp[i][j+1]);
+        	       dp[i][j]=ans;
+		        }
+		    }
+		    return dp[0][0];
 		}
 
 };
