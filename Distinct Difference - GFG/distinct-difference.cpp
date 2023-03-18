@@ -35,15 +35,15 @@ class Solution {
         unordered_set<int> st;
         for(int i=N-1;i>=0;i--) // Right to Left
         {
-            st.insert(A[i]);
             suffix[i]=st.size();
+            st.insert(A[i]);
         }
         st.clear();
         vector<int> ans;
         for(int i=0;i<N;i++)
         {
             int left=st.size();
-            int right=suffix[i+1];
+            int right=suffix[i];
             ans.push_back(left-right);
             st.insert(A[i]);
         }
