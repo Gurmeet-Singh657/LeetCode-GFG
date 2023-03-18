@@ -31,7 +31,7 @@ public:
 class Solution {
   public:
     vector<int> getDistinctDifference(int N, vector<int> &A) {
-        vector<int> suffix(N+1,0);
+        vector<int> suffix(N+1,0); // Number of distinct elements present ahead me
         unordered_set<int> st;
         for(int i=N-1;i>=0;i--) // Right to Left
         {
