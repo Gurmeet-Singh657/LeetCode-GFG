@@ -15,39 +15,39 @@ class Solution {
         {
             for(int j=0;j<M;j++)
             {
-                if(grid[i][j]=='Y')
+                if(grid[i][j]=='X')
                 {
                     q.push({i,j});
                     visited[i][j]=true;
                 }
             }
         }
-        
-        int dx[4]={-1,0,0,1};
-        int dy[4]={0,-1,1,0};
-        int dist=0;
+        // x,y -> (x-1)(y) , (x,y+1) , (x+1,y) , (x,y-1)
+        int dx[4]={-1,0,1,0};
+        int dy[4]={0,-1,0,1};
+        int steps=0;
         while(!q.empty())
         {
             int qsize=q.size();
             while(qsize--)
             {
-                auto it=q.front();
-                q.pop();
-                int x=it.first,y=it.second;
-                
-                if(grid[x][y]=='X') return dist;
-                
-                for(int k=0;k<4;k++)
-                {
-                    int adji=x+dx[k],adjj=y+dy[k];
-                    if(adji>=0 && adjj>=0 && adji<N && adjj<M && !visited[adji][adjj])
-                    {
-                        q.push({adji,adjj});
-                        visited[adji][adjj]=true;
-                    }
-                }
+                 auto it=q.front();
+                 q.pop();
+                 int x=it.first,y=it.second;
+                 
+                 if(grid[x][y]=='Y') return steps;
+                 
+                 for(int k=0;k<4;k++)
+                 {
+                     int adji=x+dx[k],adjj=y+dy[k];
+                     if(adji>=0 && adjj>=0 && adji<N && adjj<M && !visited[adji][adjj])
+                     {
+                         q.push({adji,adjj});
+                         visited[adji][adjj]=true;
+                     }
+                 }
             }
-            dist++;
+           steps++;
         }
         return -1;
     }
