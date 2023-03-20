@@ -14,7 +14,7 @@ public:
         int mini=1e9;
         for(int i=0;i<N;i++)
         {
-            int curr=time[i]*abs(cur-pos[i]);
+            int curr=abs(pos[i]-cur)*time[i];
             mini=min(mini,curr);
         }
         return mini;
