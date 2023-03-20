@@ -15,7 +15,7 @@ class Solution {
         {
             for(int j=0;j<M;j++)
             {
-                if(grid[i][j]=='X')
+                if(grid[i][j]=='Y')
                 {
                     q.push({i,j});
                     visited[i][j]=true;
@@ -35,7 +35,7 @@ class Solution {
                  q.pop();
                  int x=it.first,y=it.second;
                  
-                 if(grid[x][y]=='Y') return steps;
+                 if(grid[x][y]=='X') return steps;
                  
                  for(int k=0;k<4;k++)
                  {
