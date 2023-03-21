@@ -15,24 +15,24 @@ public:
       {
           if(S[i]!='r' && S[i]!='p')
           {
-             if(!st.empty())
-             {
-                 char ch=st.top();
-                 int countr=0,countp=0;
-                 while(!st.empty())
-                 {
-                     if(st.top()=='r') countr++;
-                     else countp++;
-                     st.pop();
-                 }
-                 if(ch=='r') ans+=X*min(countr,countp);
-                 if(ch=='p') ans+=Y*min(countr,countp);
-             }
-             continue;
+              if(!st.empty())
+              {
+                  char ch=st.top();
+                  int countr=0,countp=0;
+                  while(!st.empty())
+                  {
+                      if(st.top()=='r') countr++;
+                      else countp++;
+                      st.pop();
+                  }
+                  if(ch=='r') ans+=X*min(countr,countp);
+                  if(ch=='p') ans+=Y*min(countr,countp);
+              }
+              continue;
           }
-          if(st.empty())
-            st.push(S[i]);
-          else if(X>=Y)
+          
+          if(st.empty()) st.push(S[i]);
+          else if(X>=Y) // removing pr is better than removing rp
           {
               if(st.top()=='p' && S[i]=='r')
               {
@@ -44,7 +44,7 @@ public:
                   st.push(S[i]);
               }
           }
-          else 
+          else  // X>Y -> removing rp is better than removing pr
           {
               if(st.top()=='r' && S[i]=='p')
               {
@@ -58,19 +58,19 @@ public:
           }
       }
       if(!st.empty())
-         {
-             char ch=st.top();
-             int countr=0,countp=0;
-             while(!st.empty())
-             {
-                 if(st.top()=='r') countr++;
-                 else countp++;
-                 st.pop();
-             }
-             if(ch=='r') ans+=X*min(countr,countp);
-             if(ch=='p') ans+=Y*min(countr,countp);
-         }
-         return ans;
+      {
+          char ch=st.top();
+          int countr=0,countp=0;
+          while(!st.empty())
+          {
+              if(st.top()=='r') countr++;
+              else countp++;
+              st.pop();
+          }
+          if(ch=='r') ans+=X*min(countr,countp);
+          if(ch=='p') ans+=Y*min(countr,countp);
+      }
+      return ans;
     }
 };
 
