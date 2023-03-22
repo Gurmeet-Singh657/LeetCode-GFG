@@ -36,40 +36,35 @@ Node *insert(Node *tree, int val) {
 
 class Solution{
 public:
-    int uppersum=0;
-    Node* f(Node* root,int target,int sum)
+    
+    Node* f(Node* root,int target,int& uppersum)
     {
         if(root==NULL) return NULL;
-        if(root->data==target)
-        {
-            uppersum=sum;
-            return root;
-        }
-        if(root->data>target)
-            return f(root->left,target,sum+root->data);
-        if(root->data<target)
-            return f(root->right,target,sum+root->data);
+        if(root->data==target) return root;
+        uppersum+=root->data;
+        if(root->data>target) return f(root->left,target,uppersum);
+        if(root->data<target) return f(root->right,target,uppersum);
         return NULL;
     }
-    
     void MinSum(Node* root,int& mini,int lowersum)
     {
-        if(root==NULL)
-            return;
+        if(root==NULL) return;
         if(root->left==NULL && root->right==NULL)
         {
             lowersum+=root->data;
             mini=min(mini,lowersum);
         }
-        MinSum(root->left,mini,lowersum+root->data);
-        MinSum(root->right,mini,lowersum+root->data);
+        lowersum+=root->data;
+        MinSum(root->left,mini,lowersum);
+        MinSum(root->right,mini,lowersum);
     }
     int maxDifferenceBST(Node *root,int target){
-        // Finding the Target
-        Node* tarRoot=f(root,target,0);
+        // Finding the Target and uppersum;
+        int uppersum=0;
+        Node* tarRoot=f(root,target,uppersum);
         if(!tarRoot) return -1;
         
-        // Find the minimum difference
+        // Find the lowersum
         int mini=1e9;
         MinSum(tarRoot,mini,0);
         mini-=target;
