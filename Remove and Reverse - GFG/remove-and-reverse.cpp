@@ -21,8 +21,9 @@ class Solution {
                 int ele=S[i]-'a';
                 if(freq[ele]>1) 
                     front=false;
+                if(freq[ele]==1) 
+                    pos[ele]=i;
                 freq[ele]--;
-                pos[ele]=i;
                 i++;
             }
             else
@@ -31,8 +32,9 @@ class Solution {
                 pos[ele]=j;
                 if(freq[ele]>1)
                     front=true;
+                if(freq[ele]==1)
+                    pos[ele]=j;
                 freq[ele]--;
-                pos[ele]=j;
                 j--;
             }
         }
