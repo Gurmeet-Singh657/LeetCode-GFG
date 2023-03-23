@@ -12,16 +12,17 @@ class Solution {
         int i=0,j=n-1;
         vector<int> freq(26,0);
         for(auto it:S) freq[it-'a']++;
-        vector<int> pos(26,-1);
-        bool front=true;
+        
+        vector<int> pos(26,-1); // stores the latest position of the non repeating characters
+        bool front=true; // string is reversed or not
         while(i<=j)
         {
             if(front==true)
             {
-                int ele=S[i]-'a';
-                if(freq[ele]>1) 
-                    front=false;
-                if(freq[ele]==1) 
+                int ele=S[i]-'a'; // a b c -- z -> 0 -- 25
+                if(freq[ele]>1) // Whether character is repeating
+                    front=false; // Reverse it
+                if(freq[ele]==1) // Last character is left
                     pos[ele]=i;
                 freq[ele]--;
                 i++;
@@ -29,16 +30,14 @@ class Solution {
             else
             {
                 int ele=S[j]-'a';
-                pos[ele]=j;
-                if(freq[ele]>1)
-                    front=true;
-                if(freq[ele]==1)
+                if(freq[ele]>1) 
+                    front=true; // Reverse it
+                if(freq[ele]==1) // Last character is left
                     pos[ele]=j;
                 freq[ele]--;
                 j--;
             }
         }
-        
         string str="";
         for(int i=0;i<n;i++)
         {
