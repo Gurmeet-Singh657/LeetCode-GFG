@@ -26,9 +26,6 @@ int f(int i,int j,int k,string& A,string& B,string& C,int n1,int n2,int n3,vecto
         ans=1+f(i+1,j+1,k+1,A,B,C,n1,n2,n3,dp);
     else
     {
-        ans=max(ans,f(i+1,j+1,k,A,B,C,n1,n2,n3,dp));
-        ans=max(ans,f(i,j+1,k+1,A,B,C,n1,n2,n3,dp));
-        ans=max(ans,f(i+1,j,k+1,A,B,C,n1,n2,n3,dp));
         ans=max(ans,f(i+1,j,k,A,B,C,n1,n2,n3,dp));
         ans=max(ans,f(i,j+1,k,A,B,C,n1,n2,n3,dp));
         ans=max(ans,f(i,j,k+1,A,B,C,n1,n2,n3,dp));
