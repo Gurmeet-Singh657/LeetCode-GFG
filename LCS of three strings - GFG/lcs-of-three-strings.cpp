@@ -34,6 +34,25 @@ int f(int i,int j,int k,string& A,string& B,string& C,int n1,int n2,int n3,vecto
 }
 int LCSof3 (string A, string B, string C, int n1, int n2, int n3)
 {
-    vector<vector<vector<int>>> dp(n1,vector<vector<int>>(n2,vector<int>(n3,-1)));
-    return f(0,0,0,A,B,C,n1,n2,n3,dp);
+    vector<vector<vector<int>>> dp(n1+1,vector<vector<int>>(n2+1,vector<int>(n3+1,0)));
+    for(int i=n1-1;i>=0;i--)
+    {
+        for(int j=n2-1;j>=0;j--)
+        {
+            for(int k=n3-1;k>=0;k--)
+            {
+                int ans=0;
+                if(A[i]==B[j] && B[j]==C[k])
+                    ans=1+dp[i+1][j+1][k+1];
+                else
+                {
+                    ans=max(ans,dp[i+1][j][k]);
+                    ans=max(ans,dp[i][j+1][k]);
+                    ans=max(ans,dp[i][j][k+1]);
+                }
+                dp[i][j][k]=ans;
+            }
+        }
+    }
+    return dp[0][0][0];
 }
