@@ -24,8 +24,19 @@ class Solution
     //Function to find the maximum number of cuts.
     int maximizeTheCuts(int n, int x, int y, int z)
     {
-        vector<int> dp(n+1,-1);
-        int ans=f(n,x,y,z,dp);
+        vector<int> dp(n+1,0);
+        for(int i=1;i<=n;i++)
+        {
+            int takex=-1e5,takey=-1e5,takez=-1e5;
+            if(i>=x)
+                takex=1+f(i-x,x,y,z,dp);
+            if(i>=y)
+                takey=1+f(i-y,x,y,z,dp);
+            if(i>=z)
+                takez=1+f(i-z,x,y,z,dp);
+            dp[i]=max(takex,max(takey,takez));
+        }
+        int ans=dp[n];
         if(ans<0) return 0;
         return ans;
     }
