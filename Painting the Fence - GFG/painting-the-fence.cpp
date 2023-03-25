@@ -21,10 +21,24 @@ class Solution{
     }
     long long countWays(int n, int k){
         long long ans=0;
-        vector<long long> dp(n+1,-1);
-        ans+=k*1LL*f(n-1,k-1,dp);
+        vector<long long> dp(n+1,0);
+        if(k==1) 
+        {
+            if(n<=2) return 1;
+            return 0;
+        }
+        dp[0]=1;
+        for(int i=1;i<=n;i++)
+        {
+            long long ones=(k-1)*1LL*dp[i-1];
+            long long twos=0;
+            if(i>=2)
+                twos=(k-1)*1LL*dp[i-2];
+            dp[i]=(ones+twos)%mod;
+        }
+        ans+=k*1LL*dp[n-1];
         if(n>=2)
-        ans=(ans+k*1LL*f(n-2,k-1,dp))%mod;
+        ans=(ans+k*1LL*dp[n-2])%mod;
         return ans;
     }
 };
