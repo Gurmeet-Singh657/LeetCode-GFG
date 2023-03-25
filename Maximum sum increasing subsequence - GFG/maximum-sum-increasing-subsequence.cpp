@@ -19,19 +19,20 @@ class Solution{
 	}
 	int maxSumIS(int arr[], int n)  
 	{  
-	    vector<vector<int>> dp(n+1,vector<int>(n+2,0));
+	    vector<int> ahead(n+2,0),curr(n+2,0);
 	    for(int ind=n-1;ind>=0;ind--)
 	    {
 	        for(int prev=-1;prev<ind;prev++)
 	        {
-	            int nottake=dp[ind+1][prev+1];
+	            int nottake=ahead[prev+1];
         	    int take=-1e9;
         	    if(prev==-1 || arr[ind]>arr[prev])
-        	        take=arr[ind]+dp[ind+1][ind+1];
-        	   dp[ind][prev+1]=max(take,nottake);
+        	        take=arr[ind]+ahead[ind+1];
+        	   curr[prev+1]=max(take,nottake);
 	        }
+	        ahead=curr;
 	    }
-	    return dp[0][0];
+	    return ahead[0];
 	}  
 };
 
