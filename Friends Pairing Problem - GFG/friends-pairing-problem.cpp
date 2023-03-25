@@ -7,18 +7,16 @@ class Solution
 {
 public:
     #define mod (int)(1e9+7)
-    int f(int n,vector<int>& dp)
-    {
-        if(n==1) return 1;
-        if(n==2) return 2;
-        if(dp[n]!=-1) return dp[n];
-        
-        return dp[n]=(f(n-1,dp)+(n-1)*1LL*f(n-2,dp))%mod;
-    }
     int countFriendsPairings(int n) 
     { 
-        vector<int> dp(n+1,-1);
-        return f(n,dp);
+        vector<int> dp(n+1,0);
+        dp[1]=1;
+        dp[2]=2;
+        for(int i=3;i<=n;i++)
+        {
+            dp[i]=(dp[i-1]+(i-1)*1LL*dp[i-2])%mod;
+        }
+        return dp[n];
     }
 };    
  
