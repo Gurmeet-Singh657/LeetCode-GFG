@@ -9,20 +9,21 @@ using namespace std;
 
 class Solution{
 public:
-    int f(int ind,int prev,int N,int A[],vector<vector<int>>& dp)
-    {
-        if(ind==N) return 0;
-        if(dp[ind][prev+1]!=-1) return dp[ind][prev+1];
-        int nottake=f(ind+1,prev,N,A,dp);
-        int take=-1e9;
-        if(prev==-1 || abs(A[ind]-A[prev])==1)
-            take=1+f(ind+1,ind,N,A,dp);
-        return dp[ind][prev+1]=max(take,nottake);
-    }
     int longestSubsequence(int N, int A[])
     {
-        vector<vector<int>> dp(N+2,vector<int>(N+1,-1));
-        return f(0,-1,N,A,dp);
+        vector<vector<int>> dp(N+2,vector<int>(N+2,-0));
+        for(int ind=N-1;ind>=0;ind--)
+        {
+            for(int prev=-1;prev<ind;prev++)
+            {
+                int nottake=dp[ind+1][prev+1];
+                int take=-1e9;
+                if(prev==-1 || abs(A[ind]-A[prev])==1)
+                    take=1+dp[ind+1][ind+1];
+                dp[ind][prev+1]=max(take,nottake);
+            }
+        }
+        return dp[0][0];
     }
 };
 
