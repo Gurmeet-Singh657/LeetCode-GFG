@@ -31,9 +31,9 @@ class Solution{
 	{ 
 	    vector<vector<int>> dp(N+1,vector<int>(Weight+1,1e9));
 	    for(int i=0;i<=N;i++) dp[i][0]=0;
-	    for(int ind=N-1;ind>=0;ind--)
+	    for(int W=0;W<=Weight;W++)
 	    {
-	        for(int W=0;W<=Weight;W++)
+	        for(int ind=N-1;ind>=0;ind--)
 	        {
 	            int nottake=dp[ind+1][W];
 	            int take=1e9;
