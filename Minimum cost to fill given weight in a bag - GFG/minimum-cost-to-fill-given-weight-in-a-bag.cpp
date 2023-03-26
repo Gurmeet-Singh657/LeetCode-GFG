@@ -27,10 +27,22 @@ class Solution{
 	        take=cost[ind]+f(ind,cost,N,W-ind-1,dp);
 	     return dp[ind][W]=min(take,nottake);
 	}
-	int minimumCost(int cost[], int N, int W) 
+	int minimumCost(int cost[], int N, int Weight) 
 	{ 
-	    vector<vector<int>> dp(N+1,vector<int>(W+1,-1));
-        int ans=f(0,cost,N,W,dp);
+	    vector<vector<int>> dp(N+1,vector<int>(Weight+1,1e9));
+	    for(int i=0;i<=N;i++) dp[i][0]=0;
+	    for(int ind=N-1;ind>=0;ind--)
+	    {
+	        for(int W=0;W<=Weight;W++)
+	        {
+	            int nottake=dp[ind+1][W];
+	            int take=1e9;
+	            if(W>=ind+1 && cost[ind]!=-1)
+	                take=cost[ind]+dp[ind][W-ind-1];
+	            dp[ind][W]=min(take,nottake);
+	        }
+	    }
+        int ans=dp[0][Weight];
         if(ans>=1e9) return -1;
         return ans;
 	} 
