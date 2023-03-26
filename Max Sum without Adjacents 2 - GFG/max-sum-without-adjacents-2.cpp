@@ -11,21 +11,19 @@ using namespace std;
 
 class Solution{
   public:
-  int f(int ind,vector<int>& a,int n,vector<int>& dp)
-  {
-      if(ind>=n) return 0;
-      if(dp[ind]!=-1) return dp[ind];
-      int nottake=f(ind+1,a,n,dp);
-      int take1=a[ind]+f(ind+2,a,n,dp);
-      int take2=-1e9;
-      if(ind+1<n)
-          take2=a[ind]+a[ind+1]+f(ind+3,a,n,dp);
-      return dp[ind]=max(max(take1,take2),nottake);
-  }
   int findMaxSum(vector<int>& a){
       int n=a.size();
-      vector<int> dp(n,-1);
-      return f(0,a,n,dp);
+      vector<int> dp(n+3,0);
+      for(int ind=n-1;ind>=0;ind--)
+      {
+          int nottake=dp[ind+1];
+          int take1=a[ind]+dp[ind+2];
+          int take2=-1e9;
+          if(ind+1<n)
+              take2=a[ind]+a[ind+1]+dp[ind+3];
+          dp[ind]=max(max(take1,take2),nottake);
+      }
+      return dp[0];
   }
 };
 
