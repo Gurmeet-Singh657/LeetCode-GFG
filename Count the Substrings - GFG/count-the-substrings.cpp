@@ -10,17 +10,18 @@ class Solution
     public:
     int countSubstring(string S)
     {
-        int n=S.length();
         int ans=0;
+        int n=S.length();
         for(int i=0;i<n;i++)
         {
             int lower=0,upper=0;
             for(int j=i;j<n;j++)
             {
-                if(isupper(S[j])) upper++;
-                else lower++;
-                
-                if(upper==lower) ans++;
+                if(isupper(S[j]))
+                    upper++;
+                else
+                    lower++;
+                if(lower==upper) ans++;
             }
         }
         return ans;
