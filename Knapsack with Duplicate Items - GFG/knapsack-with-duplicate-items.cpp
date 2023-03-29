@@ -12,9 +12,9 @@ public:
     int knapSack(int N, int W, int val[], int wt[])
     {
         vector<vector<int>> dp(N+1,vector<int>(W+1,0));
-        for(int ind=N-1;ind>=0;ind--)
+        for(int weight=0;weight<=W;weight++)
         {
-            for(int weight=0;weight<=W;weight++)
+            for(int ind=N-1;ind>=0;ind--)
             {
                 int nottake=dp[ind+1][weight];
                 int take=-1e9;
