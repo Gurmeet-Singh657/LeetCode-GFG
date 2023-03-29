@@ -9,20 +9,21 @@ using namespace std;
 
 class Solution{
 public:
-    int f(int ind,int W,int val[],int wt[],int N,vector<vector<int>>& dp)
-    {
-        if(ind==N) return 0;
-        if(dp[ind][W]!=-1) return dp[ind][W];
-        int nottake=f(ind+1,W,val,wt,N,dp);
-        int take=-1e9;
-        if(wt[ind]<=W)
-            take=val[ind]+f(ind,W-wt[ind],val,wt,N,dp);
-        return dp[ind][W]=max(take,nottake);
-    }
     int knapSack(int N, int W, int val[], int wt[])
     {
-        vector<vector<int>> dp(N+1,vector<int>(W+1,-1));
-        return f(0,W,val,wt,N,dp);
+        vector<vector<int>> dp(N+1,vector<int>(W+1,0));
+        for(int ind=N-1;ind>=0;ind--)
+        {
+            for(int weight=0;weight<=W;weight++)
+            {
+                int nottake=dp[ind+1][weight];
+                int take=-1e9;
+                if(wt[ind]<=weight)
+                    take=val[ind]+dp[ind][weight-wt[ind]];
+                dp[ind][weight]=max(take,nottake);
+            }
+        }
+        return dp[0][W];
     }
 };
 
