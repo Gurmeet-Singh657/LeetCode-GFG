@@ -14,18 +14,13 @@ class Solution {
 		            if(nums[i]>nums[i-1])
 		            {
 		                dp[i][1]=1+dp[i-1][0]; // Take previous dec and add this to answer
-		                dp[i][0]=dp[i-1][0]; // pass this dec ahead so that it can be used
 		            }
 		            if(nums[i]<nums[i-1])
 		            {
 		                dp[i][0]=1+dp[i-1][1]; // Take previous inc and add this to answer
-		                dp[i][1]=dp[i-1][1]; // pass this inc ahead so that it can be used
 		            }
-		            if(nums[i]==nums[i-1])
-		            {
-		                dp[i][0]=dp[i-1][0];
-		                dp[i][1]=dp[i-1][1];
-		            }
+		            dp[i][0]=max(dp[i][0],dp[i-1][0]);
+		            dp[i][1]=max(dp[i][1],dp[i-1][1]);
 		    }
 		    return max(dp[n-1][0],dp[n-1][1]);
 		}
