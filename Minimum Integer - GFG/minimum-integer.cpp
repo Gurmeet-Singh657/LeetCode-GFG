@@ -33,8 +33,9 @@ class Solution {
     int minimumInteger(int N, vector<int> &A) {
         long long sum=0;
         for(int i=0;i<N;i++) sum+=A[i];
+        
         int mini=1e9;
-        for(int i=0;i<N;i++) 
+        for(int i=0;i<N;i++)
         {
             if(N*1LL*A[i]>=sum) mini=min(mini,A[i]);
         }
