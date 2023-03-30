@@ -33,8 +33,27 @@ public:
     int solveWordWrap(vector<int>nums, int k) 
     { 
         int n=nums.size();
-        vector<int> dp(n,-1);
-        return f(0,k,nums,dp);
+        vector<int> dp(n+1,0);
+        for(int ind=n-1;ind>=0;ind--)
+        {
+            int mini=1e9;
+            int total=0;
+            for(int i=ind;i<n;i++)
+            {
+                total+=nums[i];
+                if(total<=k)
+                {
+                    int curr=dp[i+1];
+                    if(i+1!=n) curr+=(k-total)*(k-total);
+                    mini=min(mini,curr);
+                }
+                else
+                    break;
+                total+=1;
+            }
+            dp[ind]=mini;
+        }
+        return dp[0];
     } 
 };
 
