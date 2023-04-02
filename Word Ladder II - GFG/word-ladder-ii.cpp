@@ -8,50 +8,78 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<string>> findSequences(string beginWord, string endWord, vector<string>& wordList) {
-        unordered_set<string> st(wordList.begin(),wordList.end());
-        vector<vector<string>> ans;
-        queue<vector<string>> q;
-        q.push({beginWord});
-        bool flag=false;
+    void DFS(string& bw,unordered_map<string,int>& mp,int steps,vector<string> curr,vector<vector<string>>& ans)
+    {
+        if(steps==1)
+        {
+            reverse(curr.begin(),curr.end());
+            ans.push_back(curr);
+            reverse(curr.begin(),curr.end());
+            return;
+        }
+        int nextsteps=steps-1;
+        for(int i=0;i<bw.length();i++)
+        {
+            char prev=bw[i];
+            for(char ch='a';ch<='z';ch++)
+            {
+                bw[i]=ch;
+                if(mp.find(bw)!=mp.end() && mp[bw]==nextsteps)
+                {
+                    curr.push_back(bw);
+                    DFS(bw,mp,steps-1,curr,ans);
+                    curr.pop_back();
+                }
+            }
+            bw[i]=prev;
+        }
+    }
+    vector<vector<string>> findSequences(string bW, string eW, vector<string>& wL) {
+        unordered_set<string> st(wL.begin(),wL.end());
+        unordered_map<string,int> mp;
+        queue<string> q;
+        q.push(bW);
+        int steps=2;
+        mp[bW]=1;
+        st.erase(bW);
         while(!q.empty())
         {
+            bool flag=true;
             int qsize=q.size();
-            unordered_set<string> temp;
             while(qsize--)
             {
-                vector<string> curr=q.front();
+                string curr=q.front();
                 q.pop();
-                string str=curr[curr.size()-1];
-                if(str==endWord)
+                if(curr==eW)
                 {
-                    ans.push_back(curr);
-                    flag=true;
-                    continue;
+                    flag=false;
+                    break;
                 }
-                for(int i=0;i<str.length();i++)
+                for(int i=0;i<curr.length();i++)
                 {
-                    char ch=str[i];
-                    for(char currch='a';currch<='z';currch++)
+                    char prev=curr[i];
+                    for(char ch='a';ch<='z';ch++)
                     {
-                        str[i]=currch;
-                        if(st.find(str)!=st.end())
+                        curr[i]=ch;
+                        if(st.find(curr)!=st.end())
                         {
-                            curr.push_back(str);
+                            mp[curr]=steps;
                             q.push(curr);
-                            temp.insert(str);
-                            curr.pop_back();
+                            st.erase(curr);
                         }
                     }
-                    str[i]=ch;
+                    curr[i]=prev;
                 }
             }
-            if(flag==true) break;
-            for(auto it:temp)
-            {
-                st.erase(it);
-            }
+            if(flag==false) break;
+            steps++;
         }
+        steps-=1;
+        if(mp.find(eW)==mp.end()) return {};
+        vector<vector<string>> ans;
+        vector<string> curr;
+        curr.push_back(eW);
+        DFS(eW,mp,steps,curr,ans);
         return ans;
     }
 };
