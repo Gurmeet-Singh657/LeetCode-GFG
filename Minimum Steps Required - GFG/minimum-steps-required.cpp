@@ -9,9 +9,9 @@ using namespace std;
 // User function Template for C++
 
 int minSteps(string str) {
-    int n=str.length();
     int count=1;
-    for(int i=1;i<n;i++)
+    // aabbbaabba
+    for(int i=1;i<str.length();i++)
     {
         if(str[i]==str[i-1]) continue;
         count++;
