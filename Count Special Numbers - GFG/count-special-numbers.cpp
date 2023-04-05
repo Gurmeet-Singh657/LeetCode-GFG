@@ -16,7 +16,7 @@ class Solution {
         for(int i=0;i<N;i++)
         {
             int ele=arr[i];
-            if(mp[ele]<=1)
+            if(mp[ele]<2) // if it is marked less than 2 times
             {
                 for(int j=ele;j<=maxi;j+=ele)
                 {
