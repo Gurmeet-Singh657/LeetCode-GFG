@@ -30,7 +30,7 @@ the answer is 4 in this case.</span>
 You don't need to read input or print anything.&nbsp;Complete the function <strong>count</strong><strong>SpecialNumbers() </strong>which takes the integer&nbsp;<strong>N&nbsp;</strong>and the array <strong>arr[ ]</strong> as the input parameters, and returns the count of special numbers in the array.&nbsp;</span></p>
 
 <p><br>
-<span style="font-size:18px"><strong>Expected Time Complexity:</strong>&nbsp;O(N*M) where M = max(arr[i])<br>
+<span style="font-size:18px"><strong>Expected Time Complexity:</strong>&nbsp;O(N*root(M)) where M = max(arr[i])<br>
 <strong>Expected Auxiliary Space:</strong>&nbsp;O(N)</span></p>
 
 <p><br>
