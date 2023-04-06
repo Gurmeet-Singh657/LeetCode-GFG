@@ -22,7 +22,7 @@ public:
             }
             else
             {
-                ans++;
+                ans++; // adding one character at the front
                 i=0;
                 j=n-1-ans;
             }
