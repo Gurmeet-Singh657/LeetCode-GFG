@@ -24,7 +24,6 @@ class Solution {
             {
                 st.push(it);
             }
-            
         }
         vector<int> ans;
         while(!st.empty())
