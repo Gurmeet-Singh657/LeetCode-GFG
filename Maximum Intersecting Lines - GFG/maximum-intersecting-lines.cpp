@@ -14,15 +14,17 @@ class Solution {
         map<int,int> mp;
         for(auto it:lines)
         {
+            // (s,e) freq[s]++, freq[e+1]--
             int s=it[0],e=it[1];
-            mp[s]++,mp[e+1]--;
+            mp[s]++;
+            mp[e+1]--;
         }
         int maxi=1;
-        int freq=0;
+        int presum=0; // it shows the frequency of every element
         for(auto it:mp)
         {
-            freq+=it.second;
-            maxi=max(maxi,freq);
+            presum+=it.second;
+            maxi=max(maxi,presum);
         }
         return maxi;
     }
