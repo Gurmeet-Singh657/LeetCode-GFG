@@ -22,7 +22,7 @@ public:
                 count+=(n-j);
                 i++;
             }
-            else
+            else 
             {
                 j++;
             }
