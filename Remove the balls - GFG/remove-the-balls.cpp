@@ -15,14 +15,14 @@ class Solution {
         {
             if(!st.empty())
             {
-                int prev=st.top();
-                if(color[prev]==color[i] && radius[prev]==radius[i])
-                    st.pop();
-                else
-                    st.push(i);
+              int prev=st.top(); // topmost index
+              if(color[prev]==color[i] && radius[prev]==radius[i])
+                st.pop();
+              else
+                st.push(i);
             }
             else
-            st.push(i);
+                st.push(i);
         }
         return st.size();
     }
