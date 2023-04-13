@@ -1,6 +1,6 @@
 # Partition the Array
 ## Hard
-<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given an array&nbsp;<strong>A[]&nbsp;</strong>of&nbsp;<strong>N&nbsp;</strong>integers. The task is to partition the array into four non-empty contiguous subarrays&nbsp;<strong>P, Q, R, and S </strong>such that each element of the array <strong>A[]</strong> should be present in exactly one subarray.<br>
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given an array&nbsp;<strong>A[]&nbsp;</strong>of&nbsp;<strong>N&nbsp;</strong>integers. The task is to partition the array into four non-empty contiguous subarrays&nbsp;<strong>P, Q, R, and S </strong>such that each element of the array <strong>A[]</strong> should be present in any subarray.<br>
 Let&nbsp;<strong>W, X, Y, and Z</strong> be the sum of the elements in&nbsp;<strong>P, Q, R, and S</strong> respectively.<br>
 Find the smallest absolute difference between the maximum and the minimum among<strong> W, X, Y, and Z</strong>.</span></p>
 
