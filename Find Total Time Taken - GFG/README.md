@@ -52,7 +52,7 @@ n = 8
 arr = {6, 6, 1, 8, 1, 1, 3, 1}
 time ={8, 4, 1, 5, 2, 8, 9, 3}<strong>
 Output:</strong>
-33<strong>
+35<strong>
 Explanation:</strong>
 for 1st element(6) = 0 Sec-&gt; <strong>total = 0</strong>
     2nd element(6) = repeated element so
