@@ -31,13 +31,19 @@ public:
 class Solution {
   public:
     int totalTime(int n, vector<int> &arr, vector<int> &time) {
-        unordered_set<int> st;
         int ans=0;
+        unordered_set<int> st; // whether task is repeated
         st.insert(arr[0]);
         for(int i=1;i<n;i++)
         {
-            if(st.find(arr[i])!=st.end()) ans+=time[arr[i]-1];
-            else ans++;
+            if(st.find(arr[i])!=st.end()) // whether the task is repeated
+            {
+                ans+=time[arr[i]-1];
+            }
+            else // time reqd to pick the element
+            {
+                ans++;
+            }
             st.insert(arr[i]);
         }
         return ans;
