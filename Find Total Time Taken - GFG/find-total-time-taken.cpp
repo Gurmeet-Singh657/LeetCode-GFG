@@ -31,24 +31,16 @@ public:
 class Solution {
   public:
     int totalTime(int n, vector<int> &arr, vector<int> &time) {
-        time.insert(time.begin(),-1);
-        unordered_map<int,int> mp;
-        int currTime=0;
-        mp[arr[0]]=0;
+        unordered_set<int> st;
+        int ans=0;
+        st.insert(arr[0]);
         for(int i=1;i<n;i++)
         {
-            int task=arr[i];
-            currTime++;
-            if(mp.find(task)!=mp.end())
-            {
-                if(currTime<time[task]+mp[task])
-                {
-                    currTime=mp[task]+time[task];
-                }
-            }
-            mp[task]=currTime;
+            if(st.find(arr[i])!=st.end()) ans+=time[arr[i]-1];
+            else ans++;
+            st.insert(arr[i]);
         }
-        return currTime;
+        return ans;
     }
 };
 
