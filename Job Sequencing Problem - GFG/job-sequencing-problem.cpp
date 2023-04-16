@@ -29,7 +29,6 @@ class Solution
     static bool cmp(Job& J1,Job& J2)
     {
         if(J1.profit>J2.profit) return true;
-        if(J1.profit==J2.profit && J1.dead>J2.dead) return true;
         return false;
     }
     //Function to find the maximum profit and the number of jobs done.
