@@ -25,34 +25,32 @@ struct Job
 
 class Solution 
 {
-    public:
+    public: 
     static bool cmp(Job& J1,Job& J2)
     {
         if(J1.profit>J2.profit) return true;
-        if(J1.profit==J2.profit) return J1.dead>=J2.dead;
+        if(J1.profit==J2.profit && J1.dead>J2.dead) return true;
         return false;
     }
     //Function to find the maximum profit and the number of jobs done.
     vector<int> JobScheduling(Job arr[], int n) 
     { 
         sort(arr,arr+n,cmp);
-        bool deadlines[100001]={0};
+        bool Deadline[100001]={0};
         int count=0,profit=0;
         for(int i=0;i<n;i++)
         {
-            auto curr=arr[i];
-            int Jid=curr.id;
-            int Jdead=curr.dead;
-            int Jprofit=curr.profit;
-            for(int d=Jdead;d>=1;d--)
+            int currdead=arr[i].dead;
+            int currprofit=arr[i].profit;
+            while(currdead>=1 && Deadline[currdead]==1)
             {
-                if(deadlines[d]==0)
-                {
-                    deadlines[d]=true;
-                    count++;
-                    profit+=Jprofit;
-                    break;
-                }
+                currdead--;
+            }
+            if(currdead>=1)
+            {
+                Deadline[currdead]=1;
+                profit+=currprofit;
+                count++;
             }
         }
         return {count,profit};
