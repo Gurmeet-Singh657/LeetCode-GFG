@@ -84,22 +84,27 @@ public:
 
 class Solution {
 public:
-    int f(Node* root,int target,int& sum,int& minlen,int& maxi,int& mini,bool& flag)
+    int f(Node* root,int& minlen,int& sum,int target,bool& flag,int& maxi,int &mini)
     {
         if(root==NULL) return 0;
+        
+        // below subtrees sum,isbst,maxi,mini
         int leftsum=0,rightsum=0;
-        int leftmaxi=-1e9,rightmaxi=-1e9,leftmini=1e9,rightmini=1e9;
         bool leftflag=true,rightflag=true;
-        int leftlen=f(root->left,target,leftsum,minlen,leftmaxi,leftmini,leftflag);
-        int rightlen=f(root->right,target,rightsum,minlen,rightmaxi,rightmini,rightflag);
+        int leftmaxi=-1e9,rightmaxi=-1e9;
+        int leftmini=1e9,rightmini=1e9;
+        
+        int leftlen=f(root->left,minlen,leftsum,target,leftflag,leftmaxi,leftmini);
+        int rightlen=f(root->right,minlen,rightsum,target,rightflag,rightmaxi,rightmini);
+        
         sum=root->data+leftsum+rightsum;
-        int currLen=1+leftlen+rightlen;
+        int currLen=leftlen+rightlen+1;
         maxi=max(root->data,max(leftmaxi,rightmaxi));
         mini=min(root->data,min(leftmini,rightmini));
         flag=false;
         if(root->data>leftmaxi && root->data<rightmini && leftflag && rightflag)
         {
-            flag=true;
+            flag=true; // current tree is also bst
         }
         if(currLen<minlen && sum==target && flag)
         {
@@ -108,11 +113,9 @@ public:
         return currLen;
     }
     int minSubtreeSumBST(int target, Node *root) {
-        int sum=0;
-        int minlen=1e9;
-        int maxi=-1e9,mini=1e9;
+        int sum=0,minlen=1e9,maxi=-1e9,mini=1e9;
         bool flag=true;
-        f(root,target,sum,minlen,maxi,mini,flag);
+        f(root,minlen,sum,target,flag,maxi,mini);
         return minlen==1e9?-1:minlen;
     }
 };
