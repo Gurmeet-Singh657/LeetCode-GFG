@@ -16,17 +16,18 @@ class Solution{
         {
             if(S[i]=='1')
             {
-                int left=max(0,i-X);
-                int right=min(N-1,i+X);
+                // there is wifi from i-X to i+X
+                int left=max(i-X,0);
+                int right=min(i+X,N-1);
                 freq[left]++;
                 freq[right+1]--;
             }
         }
         for(int i=0;i<N;i++)
         {
-            if(i>0)
-            freq[i]+=freq[i-1];
-            if(freq[i]==0) return false;
+            if(i>0) freq[i]+=freq[i-1];
+            if(freq[i]==0) // no access to wifi here
+                return false;
         }
         return true;
     }
