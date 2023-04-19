@@ -101,9 +101,10 @@ struct Node
 class Solution{
 
     public:
-    unordered_map<Node*,Node*> parent;
-    Node* king;
-    int FindSum(int k)
+    Node* king;// location of home
+    unordered_map<Node*,Node*> parent; // parent map
+    // Level Order Traversal to take the nodes level wise
+    int LevelOrder(int k)
     {
         int sum=0;
         queue<Node*> q;
@@ -117,8 +118,8 @@ class Solution{
             while(qsize--)
             {
                 auto curr=q.front();
-                sum+=curr->data;
                 q.pop();
+                sum+=curr->data;
                 if(curr->left && !vis[curr->left])
                 {
                     vis[curr->left]=true;
@@ -140,37 +141,37 @@ class Solution{
         }
         return sum;
     }
+    // Find the home and make the parent map
     void MakeParent(Node* root,int home)
     {
         queue<Node*> q;
         q.push(root);
         parent[root]=NULL;
-        
         while(!q.empty())
         {
             auto curr=q.front();
+            q.pop();
+            // Searching the home
             if(curr->data==home)
             {
                 king=curr;
             }
-            q.pop();
             if(curr->left)
             {
-                parent[curr->left]=curr;
                 q.push(curr->left);
+                parent[curr->left]=curr;
             }
             if(curr->right)
             {
-                parent[curr->right]=curr;
                 q.push(curr->right);
+                parent[curr->right]=curr;
             }
         }
     }
     int ladoos(Node* root, int home, int k)
     {
-        Node* king;
         MakeParent(root,home);
-        return FindSum(k);
+        return LevelOrder(k);
     }
 
 
