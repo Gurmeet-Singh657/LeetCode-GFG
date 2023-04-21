@@ -10,8 +10,8 @@ class Solution{
 public:
     #define ll long long int
     vector<long long> smallerSum(int n,vector<int> &arr){
-        map<ll,ll> mp;
-        unordered_map<ll,ll> Presum;
+        map<ll,ll> mp; // frequency of every element
+        unordered_map<ll,ll> Presum; // Prefix sum till every element
         for(int i=0;i<n;i++)
         {
             mp[arr[i]]++;
@@ -20,7 +20,7 @@ public:
         for(auto it:mp)
         {
             Presum[it.first]=prevsum;
-            prevsum+=it.second*it.first;
+            prevsum+=it.second*it.first; 
         }
         vector<ll> ans;
         for(int i=0;i<n;i++)
