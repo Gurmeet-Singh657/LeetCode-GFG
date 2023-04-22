@@ -8,27 +8,21 @@ using namespace std;
 //User function Template for C++
 class Solution{
 public:
-    #define ll long long int
     vector<long long> smallerSum(int n,vector<int> &arr){
-        map<ll,ll> mp; // frequency of every element
-        unordered_map<ll,ll> Presum; // Prefix sum till every element
-        for(int i=0;i<n;i++)
-        {
-            mp[arr[i]]++;
+        vector<long long> res;
+        vector<int> v(arr);
+        vector<long long> sum;
+        long long s = 0;
+        sort(v.begin(),v.end());
+        for(int i=1;i<=n;i++){
+            sum.push_back(s);
+            s+=v[i-1];
         }
-        ll prevsum=0;
-        for(auto it:mp)
-        {
-            Presum[it.first]=prevsum;
-            prevsum+=it.second*it.first; 
+        for(int i=0;i<n;i++){
+            int index = lower_bound(v.begin(),v.end(),arr[i])-v.begin();
+            res.push_back(sum[index]);
         }
-        vector<ll> ans;
-        for(int i=0;i<n;i++)
-        {
-            ll currans=Presum[arr[i]];
-            ans.push_back(currans);
-        }
-        return ans;
+        return res;
     }
 };
 
