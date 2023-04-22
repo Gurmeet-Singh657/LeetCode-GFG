@@ -29,10 +29,10 @@ There are no smaller elements than 4.</span></pre>
 <p><span style="font-size:18px"><strong>Your Task:</strong><br>
 You don't need to read input or print anything. Your task is to complete the function <strong>smallerSum()</strong> which takes an integer&nbsp;<strong>n</strong>&nbsp;and an array <strong>arr</strong>&nbsp;and returns&nbsp;an array of length <strong>n</strong> , the answer for every index.</span></p>
 
-<p><span style="font-size:18px"><strong>Expected Time Complexity</strong>:O(n)</span><br>
+<p><span style="font-size:18px"><strong>Expected Time Complexity</strong>:O(n log n)</span><br>
 <span style="font-size:18px"><strong>Expected Space Complexity</strong>:O(n)</span><br>
 <br>
 <span style="font-size:18px"><strong>Constraints:</strong><br>
 1 &lt;= n &lt;= 10<sup>5</sup><br>
-1 &lt;= arr[i] &lt;= 10<sup>9</sup></span></p>
+0 &lt;= arr[i] &lt;= 10<sup>9</sup></span></p>
 </div>
