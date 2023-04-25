@@ -15,12 +15,12 @@ class Solution{
         for(int i=0;i<m;i++)
         {
             bool left=false,right=false;
-            if((i>0 && seats[i-1]==0  )|| i==0) left=true;
-            if((i<m-1 && seats[i+1]==0) || i==m-1) right=true;
-            if(left && right && seats[i]==0)
+            if(i==0 || seats[i-1]==0) left=true;
+            if(i==m-1 || seats[i+1]==0) right=true;
+            if(seats[i]==0 && left && right)
             {
-                seats[i]=1;
                 count++;
+                seats[i]=1;
             }
         }
         return count>=n;
