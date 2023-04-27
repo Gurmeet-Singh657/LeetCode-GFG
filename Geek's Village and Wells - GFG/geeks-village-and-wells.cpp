@@ -53,10 +53,6 @@ public:
                         {
                             dist[curri][currj]=dis;
                         }
-                        else
-                        {
-                            dist[curri][currj]=0;
-                        }
                     }
                 }
             }
