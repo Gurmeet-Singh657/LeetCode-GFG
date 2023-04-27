@@ -10,29 +10,28 @@ using namespace std;
 
 class Solution{
 public:
+    // x,y -> (x-1,y), (x+1,y),(x,y-1),(x,y+1)
     int dx[4]={-1,1,0,0};
     int dy[4]={0,0,-1,1};
     vector<vector<int>> chefAndWells(int n,int m,vector<vector<char>> &c){
-        queue<pair<int,int>> q;
         vector<vector<int>> dist(n,vector<int>(m,-1));
-        vector<vector<bool>> vis(n,vector<bool>(m,0));
+        vector<vector<bool>> vis(n,vector<bool>(m,false));
+        queue<pair<int,int>> q;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(c[i][j]=='W') 
+                if(c[i][j]=='W')
                 {
                     q.push({i,j});
                     vis[i][j]=true;
-                    dist[i][j]=0;
                 }
-                else if(c[i][j]=='N' || c[i][j]=='.')
+                if(c[i][j]=='W' || c[i][j]=='.' || c[i][j]=='N')
                 {
                     dist[i][j]=0;
                 }
             }
         }
-        
         int dis=2;
         while(!q.empty())
         {
