@@ -20,16 +20,16 @@ public:
         }
         int curr=0;
         int maxi=-1;
-        bool flag=false;
+        bool flag=false; // candidate for maximum
         for(auto it:mp)
         {
-            curr+=it.second;
-            if(curr>=k)
+            curr+=it.second; // prefixsum
+            if(curr>=k) // prefixsum >=k
             {
                 flag=true;
-                maxi=it.first; 
+                maxi=it.first;
             }
-            else if(flag==true)
+            else if(flag==true) // prev element is the candidate
             {
                 maxi=it.first-1;
                 flag=false;
