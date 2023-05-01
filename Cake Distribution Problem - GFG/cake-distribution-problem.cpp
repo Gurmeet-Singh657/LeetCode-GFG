@@ -28,7 +28,7 @@ class Solution{
         return count>=K+1;
     }
     int maxSweetness(vector<int>& sweetness, int N, int K) {
-        ll start=1,end=(int)(1e14);
+        ll start=1,end=(ll)(1e14);
         ll ans=-1;
         while(start<=end)
         {
