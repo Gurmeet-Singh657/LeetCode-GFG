@@ -10,16 +10,15 @@ using namespace std;
 class Solution{
 public:
     #define mod (int)(1e9+7)
-    #define ll long long int
-    ll f(int n,int r,vector<vector<ll>>& dp)
+    int f(int n,int r,vector<vector<int>>& dp)
     {
         if(n<r) return 0;
+        if(r==0 || n==r) return 1;
         if(dp[n][r]!=-1) return dp[n][r];
-        if(r==0 || r==n) return 1;
-        return dp[n][r]=(f(n-1,r-1,dp)+f(n-1,r,dp))%mod;
+        return dp[n][r]=(f(n-1,r-1,dp)+0LL+f(n-1,r,dp))%mod;
     }
     int nCr(int n, int r){
-        vector<vector<ll>> dp(n+1,vector<ll>(r+1,-1));
+        vector<vector<int>> dp(n+1,vector<int>(r+1,-1));
         return f(n,r,dp);
     }
 };
