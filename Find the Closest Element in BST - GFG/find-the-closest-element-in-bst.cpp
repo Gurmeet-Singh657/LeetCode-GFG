@@ -35,26 +35,27 @@ struct Node {
 class Solution
 {
     public:
+    void BSTTraversal(Node* root,int K,int& ans)
+    {
+        if(!root) return;
+        
+        ans=min(ans,abs(root->data-K));
+        if(root->data>K)
+        {
+            BSTTraversal(root->left,K,ans);
+        }
+        else if(root->data<K)
+        {
+            BSTTraversal(root->right,K,ans);
+        }
+    }
     //Function to find the least absolute difference between any node
 	//value of the BST and the given integer.
     int minDiff(Node *root, int K)
     {
-        if(root==NULL) return 1e9;
-        if(root->data==K)
-        {
-            return 0;
-        }
-        else if(root->data>K)
-        {
-            int curr=abs(root->data-K);
-            return min(curr,minDiff(root->left,K));
-        }
-        else
-        {
-            int curr=abs(root->data-K);
-            return min(curr,minDiff(root->right,K));
-        }
-        return 0;
+        int ans=1e9;
+        BSTTraversal(root,K,ans);
+        return ans;
     }
 };
 
