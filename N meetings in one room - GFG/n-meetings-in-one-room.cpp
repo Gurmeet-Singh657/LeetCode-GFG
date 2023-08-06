@@ -11,25 +11,25 @@ class Solution
     static bool cmp(pair<int,int>& p1,pair<int,int>& p2)
     {
         if(p1.second<p2.second) return true;
-        if(p1.second==p2.second) return p1.first<=p2.first;
+        if(p1.second==p2.second && p1.first<p2.first) return true;
         return false;
     }
     int maxMeetings(int start[], int end[], int n)
     {
-        vector<pair<int,int>> v;
+        vector<pair<int,int>> meets;
         for(int i=0;i<n;i++)
         {
-            v.push_back({start[i],end[i]});
+            meets.push_back({start[i],end[i]});
         }
-        sort(v.begin(),v.end(),cmp);
-        int prev=0;
+        sort(meets.begin(),meets.end(),cmp);
+        int first=meets[0].second;
         int count=1;
         for(int i=1;i<n;i++)
         {
-            if(v[i].first>v[prev].second)
+            if(meets[i].first>first)
             {
+                first=meets[i].second;
                 count++;
-                prev=i;
             }
         }
         return count;
