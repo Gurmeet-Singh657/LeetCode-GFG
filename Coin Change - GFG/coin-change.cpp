@@ -5,25 +5,22 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-    #define ll long long int
-    long long int count(int coins[], int N, int sum) {
-        vector<ll> ahead(sum+1,0);
-        ahead[0]=1;
-        for(int ind=N-1;ind>=0;ind--)
+    long long int f(int ind,int coins[],int N,int sum,vector<vector<long long int>>& dp)
+    {
+        if(ind==N) return sum==0;
+        if(dp[ind][sum]!=-1) return dp[ind][sum];
+        long long int nottake=f(ind+1,coins,N,sum,dp);
+        long long int take=0;
+        if(sum>=coins[ind])
         {
-            vector<ll> curr(sum+1,0);
-            curr[0]=1;
-            for(int s=1;s<=sum;s++)
-            {
-                long long nottake=ahead[s];
-                long long take=0;
-                if(s>=coins[ind])
-                    take=curr[s-coins[ind]];
-                curr[s]=take+nottake;
-            }
-            ahead=curr;
+            take=f(ind,coins,N,sum-coins[ind],dp);
         }
-        return ahead[sum];
+        return dp[ind][sum]=take+nottake;
+    }
+    long long int count(int coins[], int N, int sum) {
+        vector<vector<long long int>> dp(N,vector<long long int>(sum+1,-1));
+        sort(coins,coins+N);
+        return f(0,coins,N,sum,dp);
     }
 };
 
