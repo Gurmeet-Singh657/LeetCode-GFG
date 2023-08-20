@@ -31,26 +31,28 @@ class Solution{
   }
   int carAssembly(vector<vector<int>>& a, vector<vector<int>>& T, vector<int>& e, vector<int>& x){
       int n=a[0].size();
-      vector<vector<int>> dp(n+1,vector<int>(2,-1));
-      dp[n][0]=x[0];
-      dp[n][1]=x[1];
+      int prev0=x[0];
+      int prev1=x[1];
       
-      for(int j=n-1;j>=0;j--)
+      for(int j=n-1;j>=1;j--)
       {
+          int curr0,curr1;
           for(int prev=0;prev<2;prev++)
           {
               int firstLine=1e9,secondLine=1e9;
           
-              if(prev!=1) firstLine=a[0][j]+dp[j+1][0];
-              else firstLine=T[prev][j]+a[0][j]+dp[j+1][0];
+              if(prev!=1) firstLine=a[0][j]+prev0;
+              else firstLine=T[prev][j]+a[0][j]+prev0;
               
-              if(prev!=0) secondLine=a[1][j]+dp[j+1][1];
-              else secondLine=T[prev][j]+a[1][j]+dp[j+1][1];
+              if(prev!=0) secondLine=a[1][j]+prev1;
+              else secondLine=T[prev][j]+a[1][j]+prev1;
               
-              dp[j][prev]=min(firstLine,secondLine);
+              if(prev==0) curr0=min(firstLine,secondLine);
+              else curr1=min(firstLine,secondLine);
           }
+          prev0=curr0,prev1=curr1;
       }
-      return min(e[0]+a[0][0]+dp[1][0],e[1]+a[1][0]+dp[1][1]);
+      return min(e[0]+a[0][0]+prev0,e[1]+a[1][0]+prev1);
   }
 };
 
