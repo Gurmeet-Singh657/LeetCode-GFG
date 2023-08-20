@@ -14,24 +14,25 @@ public:
         if(j==m) return 0;
         
         if(dp[i][j]!=-1) return dp[i][j];
-        // Right
-        int Right=f(i,j+1,n,m,M,dp);
-        // Right Down
-        int RightDown=-1e9;
-        if(i+1<n) RightDown=f(i+1,j+1,n,m,M,dp);
-        int RightUp=-1e9;
-        if(i-1>=0) RightUp=f(i-1,j+1,n,m,M,dp);
-        return dp[i][j]=M[i][j]+max(Right,max(RightDown,RightUp));
+        
+        int Right=-1e9,UpRight=-1e9,DownRight=-1e9;
+        Right=f(i,j+1,n,m,M,dp);
+        if(i>0)
+            UpRight=f(i-1,j+1,n,m,M,dp);
+        if(i+1<n)
+            DownRight=f(i+1,j+1,n,m,M,dp);
+        return dp[i][j]=M[i][j]+max(Right,max(UpRight,DownRight));
     }
     int maxGold(int n, int m, vector<vector<int>> M)
     {
-        vector<vector<int>> dp(n,vector<int>(m,-1));
-        int maxi=-1e9;
-        for(int i=0;i<n;i++)
+        int MaxGold=-1e9;
+        vector<vector<int>> dp(n+1,vector<int>(m+1,-1));
+        for(int row=0;row<n;row++)
         {
-            maxi=max(maxi,f(i,0,n,m,M,dp));
+            int currGold=f(row,0,n,m,M,dp);
+            MaxGold=max(MaxGold,currGold);
         }
-        return maxi;
+        return MaxGold;
     }
 };
 
