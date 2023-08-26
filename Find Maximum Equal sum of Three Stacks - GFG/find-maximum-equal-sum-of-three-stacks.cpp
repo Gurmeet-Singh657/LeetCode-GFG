@@ -10,36 +10,37 @@ using namespace std;
 
 class Solution{
 public:
-    int maxEqualSum(int N1,int N2,int N3,vector<int> &S1,vector<int> &S2,vector<int> &S3){
-        reverse(S1.begin(),S1.end());
-        reverse(S2.begin(),S2.end());
-        reverse(S3.begin(),S3.end());
-        int equalsum=0;
-        int i=0,j=0,k=0;
-        int sum1=0,sum2=0,sum3=0;
-        while(i<N1 || j<N2 || k<N3)
+    int maxEqualSum(int N1, int N2, int N3, vector<int> &S1, vector<int> &S2, vector<int> &S3)
+    {
+        for (int i = N1 - 2; i >= 0; i--)
+            S1[i] += S1[i + 1];
+        for (int i = N2 - 2; i >= 0; i--)
+            S2[i] += S2[i + 1];
+        for (int i = N3 - 2; i >= 0; i--)
+            S3[i] += S3[i + 1];
+        int i = 0, j = 0, k = 0;
+        int count = 0;
+        while (i < N1 && j < N2 && k < N3)
         {
-            if(sum1<=sum2 && sum1<=sum3)
+            int maxi = max(S1[i], max(S2[j], S3[k]));
+            if (maxi == S1[i])
             {
-                if(i==N1) break;
-                sum1+=S1[i];
                 i++;
             }
-            else if(sum2<=sum1 && sum2<=sum3)
+            if (maxi == S2[j])
             {
-                if(j==N2) break;
-                sum2+=S2[j];
                 j++;
             }
-            else 
+            if (maxi == S3[k])
             {
-                if(k==N3) break;
-                sum3+=S3[k];
                 k++;
             }
-            if(sum1==sum2 && sum2==sum3) equalsum=sum1;
+            if (S1[i] == S2[j] && S2[j] == S3[k])
+            {
+                return S1[i];
+            }
         }
-        return equalsum;
+        return 0;
     }
 };
 
