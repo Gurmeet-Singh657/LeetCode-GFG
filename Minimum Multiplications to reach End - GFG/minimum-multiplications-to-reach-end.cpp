@@ -10,29 +10,28 @@ using namespace std;
 
 class Solution {
   public:
+    #define MOD (int)(1e5)
     int minimumMultiplications(vector<int>& arr, int start, int end) {
         queue<int> q;
+        vector<bool> vis(1000001,0);
         q.push(start);
-        bool visited[100000]={0};
-        visited[start]=1;
+        vis[start]=true;
         int steps=0;
         while(!q.empty())
         {
             int qsize=q.size();
             while(qsize--)
             {
-                auto it=q.front();
+                int num=q.front();
                 q.pop();
-                if(it==end) return steps;
-                for(int i=0;i<arr.size();i++)
+                if(num==end) return steps;
+                
+                for(auto ele:arr)
                 {
-                    long long mul=arr[i]*it;
-                    mul%=100000;
-                    if(!visited[mul])
-                    {
-                        visited[mul]=true;
-                        q.push(mul);
-                    }
+                    int mul=(num*1LL*ele)%MOD;
+                    if(vis[mul]) continue;
+                    q.push(mul);
+                    vis[mul]=true;
                 }
             }
             steps++;
