@@ -109,32 +109,27 @@ struct Node
 
 class Solution{
   public:
-    // Inorder Traversal of Binary Tree
-    void Inorder(Node* root,vector<int>& ans)
+    void Traverse(Node* root,vector<int>& ans)
     {
         if(!root) return;
-        
-        Inorder(root->left,ans);
+        Traverse(root->left,ans);
         ans.push_back(root->data);
-        Inorder(root->right,ans);
+        Traverse(root->right,ans);
     }
-    void InorderBST(Node* root,int& ind,vector<int>& ans)
+    void BuildBST(Node* root,vector<int>& ans,int& ind)
     {
         if(!root) return;
-        InorderBST(root->left,ind,ans);
-        root->data=ans[ind];
-        ind++;
-        InorderBST(root->right,ind,ans);
+        BuildBST(root->left,ans,ind);
+        root->data=ans[ind++];
+        BuildBST(root->right,ans,ind);
     }
-    // The given root is the root of the Binary Tree
-    // Return the root of the generated BST
     Node *binaryTreeToBST (Node *root)
     {
         vector<int> ans;
-        Inorder(root,ans);
+        Traverse(root,ans);
         sort(ans.begin(),ans.end());
         int ind=0;
-        InorderBST(root,ind,ans);
+        BuildBST(root,ans,ind);
         return root;
     }
 };
