@@ -17,7 +17,7 @@ public:
         {
             if(isPrime[i]) // if the current Number is prime
             {
-                for(int j=2*i;j<=N;j+=i) // Mark all multiples as not Prime
+                for(int j=i*i;j<=N;j+=i) // Mark all multiples as not Prime
                 {
                     isPrime[j]=false;
                 }
