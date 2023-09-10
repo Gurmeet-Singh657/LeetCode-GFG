@@ -13,7 +13,7 @@ public:
         isPrime[0]=false;
         isPrime[1]=false;
         
-        for(int i=2;i<=N;i++)
+        for(int i=2;i*i<=N;i++)
         {
             if(isPrime[i]) // if the current Number is prime
             {
