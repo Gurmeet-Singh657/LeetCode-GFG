@@ -1,0 +1,103 @@
+//{ Driver Code Starts
+//
+
+#include <bits/stdc++.h> 
+using namespace std; 
+
+struct Node
+{
+    int data;
+    struct Node* next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+
+
+void printList(Node* node) 
+{ 
+	while (node != NULL) { 
+		cout << node->data <<" "; 
+		node = node->next; 
+	}  
+	cout<<"\n";
+}
+
+// } Driver Code Ends
+/*
+structure of the node of the list is as
+struct Node
+{
+    int data;
+    struct Node* next;
+
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+};
+*/
+
+class Solution{
+  public:
+    // Should return head of the modified linked list
+    Node *sortedInsert(struct Node* head, int data) {
+        
+        // dummynode pointing to head
+        Node* dummyNode=new Node(-1);
+        dummyNode->next=head;
+        
+        // Traverse the linked list until node's data is less than data to be entered
+        Node* curr=dummyNode;
+        while(curr->next && curr->next->data<data)
+        {
+            curr=curr->next;
+        }
+        
+        // Creating new Node which is to be inserted
+        Node* newNode=new Node(data);
+        
+        // Addding newNode in b/w nodes 
+        newNode->next=curr->next;
+        curr->next=newNode;
+        
+        // returning head of the linked list
+        return dummyNode->next;
+    }
+};
+
+
+//{ Driver Code Starts.
+int main() 
+{ 
+	int t;
+	cin>>t;
+	while(t--)
+	{
+		int n;
+		cin>>n;
+        
+		int data;
+		cin>>data;
+		
+		struct Node *head = new Node(data);
+		struct Node *tail = head;
+		for (int i = 0; i < n-1; ++i)
+		{
+			cin>>data;
+			tail->next = new Node(data);
+			tail = tail->next;
+		}
+		
+		int k;
+		cin>>k;
+		Solution obj;
+		head = obj.sortedInsert(head,k);
+		printList(head); 
+	}
+	return 0; 
+} 
+
+// } Driver Code Ends
