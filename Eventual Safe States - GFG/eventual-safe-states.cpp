@@ -10,36 +10,37 @@ using namespace std;
 
 class Solution {
   public:
-    bool DFS(int node,vector<int> adj[],vector<bool>& vis,vector<bool>& dfsVis)
-    {
-        vis[node]=true;
-        dfsVis[node]=true;
-        for(auto it:adj[node])
-        {
-            if(!vis[it])
-            {
-                if(DFS(it,adj,vis,dfsVis)) return true;
-            }
-            else if(dfsVis[it])
-            return true;
-        }
-        dfsVis[node]=false;
-        return false;
-    }
     vector<int> eventualSafeNodes(int V, vector<int> adj[]) {
-        vector<bool> vis(V,0),dfsVis(V,0);
+        vector<int> revAdj[V];
+        vector<int> indegree(V,0);
         for(int i=0;i<V;i++)
         {
-            if(!vis[i])
+            for(auto it:adj[i])
             {
-                DFS(i,adj,vis,dfsVis);
+                revAdj[it].push_back(i);
+                indegree[i]++;
             }
         }
-        vector<int> ans;
+        
+        queue<int> q;
         for(int i=0;i<V;i++)
         {
-            if(!dfsVis[i]) ans.push_back(i);
+            if(indegree[i]==0) q.push(i);
         }
+        
+        vector<int> ans;
+        while(!q.empty())
+        {
+            int node=q.front();
+            ans.push_back(node);
+            q.pop();
+            for(auto it:revAdj[node])
+            {
+                indegree[it]--;
+                if(indegree[it]==0) q.push(it);
+            }
+        }
+        sort(ans.begin(),ans.end());
         return ans;
     }
 };
