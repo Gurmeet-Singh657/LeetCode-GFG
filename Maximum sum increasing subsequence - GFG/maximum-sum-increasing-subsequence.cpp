@@ -4,35 +4,27 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution{
-		
-
 	public:
-	int f(int ind,int prev,int arr[],int n,vector<vector<int>>& dp)
-	{
-	    if(ind==n) return 0;
-	    if(dp[ind][prev+1]!=-1) return dp[ind][prev+1];
-	    int nottake=f(ind+1,prev,arr,n,dp);
-	    int take=-1e9;
-	    if(prev==-1 || arr[ind]>arr[prev])
-	        take=arr[ind]+f(ind+1,ind,arr,n,dp);
-	    return dp[ind][prev+1]=max(take,nottake);
-	}
 	int maxSumIS(int arr[], int n)  
 	{  
-	    vector<int> ahead(n+2,0),curr(n+2,0);
+	    vector<int> next(n+1,0);
+	    
+	    for(int i=0;i<=n;i++) next[i]=0;
+	    
 	    for(int ind=n-1;ind>=0;ind--)
 	    {
+	        vector<int> curr(n,0);
 	        for(int prev=-1;prev<ind;prev++)
 	        {
-	            int nottake=ahead[prev+1];
+	            int notTake=next[prev+1];
         	    int take=-1e9;
         	    if(prev==-1 || arr[ind]>arr[prev])
-        	        take=arr[ind]+ahead[ind+1];
-        	   curr[prev+1]=max(take,nottake);
+        	        take=arr[ind]+next[ind+1];
+        	    curr[prev+1]=max(take,notTake);
 	        }
-	        ahead=curr;
+	        next=curr;
 	    }
-	    return ahead[0];
+	    return next[0];
 	}  
 };
 
