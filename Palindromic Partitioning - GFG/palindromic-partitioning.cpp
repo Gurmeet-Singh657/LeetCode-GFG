@@ -9,9 +9,8 @@ using namespace std;
 
 class Solution{
 public:
-    bool palindrome(string& str)
+    bool checkPalindrome(int i,int j,string& str)
     {
-        int i=0,j=str.length()-1;
         while(i<=j)
         {
             if(str[i]!=str[j]) return false;
@@ -20,23 +19,29 @@ public:
         }
         return true;
     }
+    int solve(int ind,string& str,vector<int>& dp)
+    {
+        if(ind==str.length()) return -1;
+        
+        if(dp[ind]!=-1) return dp[ind];
+        int mini=1e9;
+        string curr="";
+        for(int j=ind;j<str.length();j++)
+        {
+            curr.push_back(str[j]);
+            if(checkPalindrome(ind,j,str))
+            {
+                int curr=1+solve(j+1,str,dp);
+                mini=min(mini,curr);
+            }
+        }
+        return dp[ind]=mini;
+    }
     int palindromicPartition(string str)
     {
         int n=str.length();
-        vector<int> dp(n+1,0);
-        dp[n]=-1;
-        for(int ind=n-1;ind>=0;ind--)
-        {
-            int mini=1e9;
-            string curr="";
-            for(int i=ind;i<n;i++)
-            {
-                curr.push_back(str[i]);
-                if(palindrome(curr)) mini=min(mini,1+dp[i+1]); 
-            }
-           dp[ind]=mini;
-        }
-        return dp[0];
+        vector<int> dp(n+1,-1);
+        return solve(0,str,dp);
     }
 };
 
